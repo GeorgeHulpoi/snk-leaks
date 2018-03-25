@@ -1,0 +1,15 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": 
+    {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "outDir": "./dist",
+        "baseUrl": "src",
+        "watch": true,
+    },
+    "exclude": [ "node_modules" ]
+}

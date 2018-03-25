@@ -1,0 +1,12 @@
+{
+    "name": "snk-leaks",
+    "version": "1.0.0",
+    "description": "Searching everywhere for leaks!",
+    "main": "dist/main.js",
+    "author": "Armyw0w",
+    "dependencies": {
+        "@types/node": "^9.6.0",
+        "discord.io": "github:woor/discord.io#gateway_v6",
+        "typescript": "^2.7.2"
+    }
+}
