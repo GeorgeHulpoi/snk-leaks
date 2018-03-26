@@ -8,7 +8,7 @@
 #### Interceptor check for responses which are not null and send message on Discord.
 
 # List with Crawlers:
-#### Yonkou: https://twitter.com/yonkouprod + https://www.reddit.com/user/YonkouProductions
+#### Yonkou: https://twitter.com/yonkouprod
 #### r/ShingekiNoKyojin (searching on festival thread and pre-release thread)
 #### Baidu https://tieba.baidu.com/f?kw=%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B7%A8%E4%BA%BA%E5%88%86%E6%9E%90 (I think it's chinese, we need specific words)
 #### Ryokutya http://ryokutya2089.com/ (we need specific words)
