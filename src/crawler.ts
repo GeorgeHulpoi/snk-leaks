@@ -1,4 +1,3 @@
-import { Baidu } from "./crawlers/Baidu";
 import * as Crawlers from "./crawlers/index";
 
 export class Crawler 
@@ -92,18 +91,33 @@ export class Crawler
      * @private
      * @memberof Crawler
      */
-    private Interceptor(response: any): void 
+    private Interceptor(response: CrawlerResponse | null): void 
     {
-        this.Discord.sendMessage(
-            {
-                to: this.Bot.ChannelID,
-                message: response
-            }
-        );
+        if (response !== null)
+        {
+            this.Discord.sendMessage
+            (
+                {
+                    to: this.Bot.ChannelID,
+                    message: this.FormatMessage(response)
+                }
+            );
+        }
+    }
+
+    private FormatMessage(data: CrawlerResponse): string
+    {
+        return data.message + ' (' + data.link + ')';
     }
 }
 
 export interface crawl
 {
     crawl(callback?: (response: any) => void): void;
+}
+
+export interface CrawlerResponse
+{
+    message: string;
+    link: string;
 }

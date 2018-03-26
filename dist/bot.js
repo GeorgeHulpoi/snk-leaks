@@ -6,7 +6,7 @@ var crawler_1 = require("./crawler");
 var Bot = (function () {
     function Bot() {
         var _this = this;
-        this.CrawlerInterval = 60;
+        this.CrawlerInterval = 5;
         this.Ready = function (evt) {
             console.log('Started!');
         };
@@ -17,32 +17,18 @@ var Bot = (function () {
         };
         this.Message = function (userName, userId, channelId, message, evt) {
             if (message[0] === "!") {
-                if (message === "!set-channel") {
+                if (message === "!start-crawler") {
+                    if (_this.Crawler.itStarted()) {
+                        _this.Discord.sendMessage({
+                            to: channelId,
+                            message: '**The crawler it\'s already running**'
+                        });
+                        return;
+                    }
                     _this.ChannelID = channelId;
                     _this.Discord.sendMessage({
                         to: channelId,
-                        message: 'Channel set!'
-                    });
-                    return;
-                }
-                else if (message === "!start-crawler") {
-                    if (!_this.ChannelID) {
-                        _this.Discord.sendMessage({
-                            to: channelId,
-                            message: 'Set the channel first!'
-                        });
-                        return;
-                    }
-                    else if (_this.Crawler.itStarted()) {
-                        _this.Discord.sendMessage({
-                            to: channelId,
-                            message: 'The crawler it\'s already running'
-                        });
-                        return;
-                    }
-                    _this.Discord.sendMessage({
-                        to: channelId,
-                        message: 'Started the crawler.'
+                        message: '**Started the crawler.**'
                     });
                     _this.Crawler.Start();
                 }
@@ -50,13 +36,13 @@ var Bot = (function () {
                     if (!_this.Crawler.itStarted()) {
                         _this.Discord.sendMessage({
                             to: channelId,
-                            message: 'Start the crawler first!'
+                            message: '**Start the crawler first!**'
                         });
                         return;
                     }
                     _this.Discord.sendMessage({
                         to: channelId,
-                        message: 'Stopped the crawler.'
+                        message: '**I stop the crawler.**'
                     });
                     _this.Crawler.Stop();
                 }
@@ -66,21 +52,14 @@ var Bot = (function () {
                     if (value <= 0) {
                         _this.Discord.sendMessage({
                             to: channelId,
-                            message: 'Invalid value!'
-                        });
-                        return;
-                    }
-                    else if (_this.Crawler.itStarted()) {
-                        _this.Discord.sendMessage({
-                            to: channelId,
-                            message: 'The crawler started already, stop it and try again.'
+                            message: '**Invalid value!**'
                         });
                         return;
                     }
                     _this.Crawler.Interval = Number(params[1]);
                     _this.Discord.sendMessage({
                         to: channelId,
-                        message: 'I set the interval at ' + _this.Crawler.Interval + 's.'
+                        message: '**I set the interval at ' + _this.Crawler.Interval + 's.**'
                     });
                     return;
                 }

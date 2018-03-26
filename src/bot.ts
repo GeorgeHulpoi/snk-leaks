@@ -7,7 +7,7 @@ export class Bot
     private Discord: any;
     private Crawler: Crawler;
     public ChannelID: number;
-    private CrawlerInterval: number = 60; // In seconds
+    private CrawlerInterval: number = 5; // In seconds
 
     constructor()
     {
@@ -72,52 +72,27 @@ export class Bot
     {
         if (message[0] === "!")
         {
-            if (message === "!set-channel")
+            if (message === "!start-crawler")
             {
-                this.ChannelID = channelId;
-
-                this.Discord.sendMessage
-                (
-                    {
-                        to: channelId,
-                        message: 'Channel set!'
-                    }
-                );
-
-                return;
-            }
-            else if (message === "!start-crawler")
-            {
-                if (!this.ChannelID)
+                if(this.Crawler.itStarted())
                 {
                     this.Discord.sendMessage
                     (
                         {
                             to: channelId,
-                            message: 'Set the channel first!'
-                        }
-                    );    
-                    
-                    return;
-                }
-                else if(this.Crawler.itStarted())
-                {
-                    this.Discord.sendMessage
-                    (
-                        {
-                            to: channelId,
-                            message: 'The crawler it\'s already running'
+                            message: '**The crawler it\'s already running**'
                         }
                     );    
                     
                     return;                   
                 }
                 
+                this.ChannelID = channelId;
                 this.Discord.sendMessage
                 (
                     {
                         to: channelId,
-                        message: 'Started the crawler.'
+                        message: '**Started the crawler.**'
                     }
                 );
 
@@ -131,7 +106,7 @@ export class Bot
                     (
                         {
                             to: channelId,
-                            message: 'Start the crawler first!'
+                            message: '**Start the crawler first!**'
                         }
                     );    
                     
@@ -142,7 +117,7 @@ export class Bot
                 (
                     {
                         to: channelId,
-                        message: 'Stopped the crawler.'
+                        message: '**I stop the crawler.**'
                     }
                 );             
 
@@ -161,23 +136,11 @@ export class Bot
                     (
                         {
                             to: channelId,
-                            message: 'Invalid value!'
+                            message: '**Invalid value!**'
                         }
                     );
 
                     return;
-                }
-                else if (this.Crawler.itStarted())
-                {
-                    this.Discord.sendMessage
-                    (
-                        {
-                            to: channelId,
-                            message: 'The crawler started already, stop it and try again.'
-                        }
-                    );
-
-                    return;                 
                 }
 
                 this.Crawler.Interval = Number(params[1]);
@@ -186,7 +149,7 @@ export class Bot
                 (
                     {
                         to: channelId,
-                        message: 'I set the interval at ' + this.Crawler.Interval + 's.'
+                        message: '**I set the interval at ' + this.Crawler.Interval + 's.**'
                     }
                 );
 

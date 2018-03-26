@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
 var HTTPS = require('https');
-var YonkouCrawler = (function () {
-    function YonkouCrawler() {
+var YonkouRedditCrawler = (function () {
+    function YonkouRedditCrawler() {
         this.First = true;
     }
-    YonkouCrawler.prototype.crawl = function (callback) {
+    YonkouRedditCrawler.prototype.crawl = function (callback) {
         var _this = this;
         this.getComments(function (Comments) {
             var length = Comments.length;
@@ -27,7 +27,7 @@ var YonkouCrawler = (function () {
             callback(response);
         });
     };
-    YonkouCrawler.prototype.getComments = function (callback) {
+    YonkouRedditCrawler.prototype.getComments = function (callback) {
         HTTPS.get('https://www.reddit.com/user/YonkouProductions/comments/.json', function (Response) {
             Response.setEncoding('utf8');
             var Content = "";
@@ -41,6 +41,6 @@ var YonkouCrawler = (function () {
             });
         });
     };
-    return YonkouCrawler;
+    return YonkouRedditCrawler;
 }());
-exports.Yonkou = new YonkouCrawler();
+exports.YonkouReddit = new YonkouRedditCrawler();

@@ -42,10 +42,15 @@ var Crawler = (function () {
         this.Stopped = true;
     };
     Crawler.prototype.Interceptor = function (response) {
-        this.Discord.sendMessage({
-            to: this.Bot.ChannelID,
-            message: response
-        });
+        if (response !== null) {
+            this.Discord.sendMessage({
+                to: this.Bot.ChannelID,
+                message: this.FormatMessage(response)
+            });
+        }
+    };
+    Crawler.prototype.FormatMessage = function (data) {
+        return data.message + ' (' + data.link + ')';
     };
     return Crawler;
 }());
