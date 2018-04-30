@@ -1,0 +1,43 @@
+var fs = require("fs");
+const http = require("http");
+const url = require('url');
+
+fs.open('down.html', 'w+', function(err, fd) 
+    {
+
+        var reqUrl = url.parse('http://ryokutya2089.com/');
+        var header = {};
+        header['User-Agent'] = 'Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.116 Safari/537.36';
+        var settings = {
+            host: reqUrl.hostname,
+            port: reqUrl.port || 80,
+            path: reqUrl.pathname,
+            headers: header,
+            method: 'GET'
+        };
+
+        http.get(settings, res => {
+            res.setEncoding('utf8');
+            var body = '';
+            res.on('data', function(data) {
+                body += data.toString('utf8');
+            });
+
+            res.on("end", () => {
+                body = body.replace(/(\r\n\t|\n|\r\t)/gm,"");
+                body = body.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
+                body = body.replace(/<article[^<>]*?class="[^"]*?post-96[^"]*?"[^<>]*?>.*?<\/article><!-- #post -->/g, "");
+
+                var a = body.match(/<div\s*id="primary"\s*class="site-content">.*?<\/div><!--\s*#primary\s*-->/g);
+                //fs.writeFile('down.html', a[0], function(err) {});
+
+                var match;
+                while ((match = (/<article[^<>]*?id="post-(\d*)"[^<>]*?>/g).exec(a[0])) != null) {
+                    a[0] = (a[0]).replace(match[0], "");
+                    console.log(match[1]);
+                }
+
+              });
+        });
+    }
+);
