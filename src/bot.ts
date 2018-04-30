@@ -68,7 +68,6 @@ export class Bot
      */
     private transformCmd(cmd: string): string 
     {
-<<<<<<< HEAD
         const len = cmd.length;
         let command = (cmd.substring(1, len)).split('');
 
@@ -83,58 +82,6 @@ export class Bot
                 }    
             }
         }
-=======
-        if (message[0] === "!")
-        {
-            if (message === "!start-crawler")
-            {
-                if(this.Crawler.itStarted())
-                {
-                    this.Discord.sendMessage
-                    (
-                        {
-                            to: channelId,
-                            message: '**The crawler it\'s already running**'
-                        }
-                    );    
-                    
-                    return;                   
-                }
-                
-                this.ChannelID = channelId;
-                this.Discord.sendMessage
-                (
-                    {
-                        to: channelId,
-                        message: '**Started the crawler.**'
-                    }
-                );
-
-                this.Crawler.Start();
-            }
-            else if (message === "!stop-crawler")
-            {
-                if (!this.Crawler.itStarted())
-                {
-                    this.Discord.sendMessage
-                    (
-                        {
-                            to: channelId,
-                            message: '**Start the crawler first!**'
-                        }
-                    );    
-                    
-                    return;
-                }
-
-                this.Discord.sendMessage
-                (
-                    {
-                        to: channelId,
-                        message: '**I stop the crawler.**'
-                    }
-                );             
->>>>>>> master
 
         return command.join('');
     }
@@ -156,40 +103,11 @@ export class Bot
 
             if (typeof Cmds[cmd] === "function")
             {
-<<<<<<< HEAD
                 Cmds[cmd](this, message, ...params);
             }
             else 
             {
                 message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
-=======
-                const value = Number(params[1]);
-
-                if (value <= 0)
-                {
-                    this.Discord.sendMessage
-                    (
-                        {
-                            to: channelId,
-                            message: '**Invalid value!**'
-                        }
-                    );
-
-                    return;
-                }
-
-                this.Crawler.Interval = Number(params[1]);
-
-                this.Discord.sendMessage
-                (
-                    {
-                        to: channelId,
-                        message: '**I set the interval at ' + this.Crawler.Interval + 's.**'
-                    }
-                );
-
-                return;
->>>>>>> master
             }
         }
     }

@@ -90,48 +90,16 @@ export class Crawler
      * @private
      * @memberof Crawler
      */
-<<<<<<< HEAD
     private Interceptor(response?: CrawlerResponse): void 
     {
         if (typeof response !== "undefined")
         {
             this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
         }
-=======
-    private Interceptor(response: CrawlerResponse | null): void 
-    {
-        if (response !== null)
-        {
-            this.Discord.sendMessage
-            (
-                {
-                    to: this.Bot.ChannelID,
-                    message: this.FormatMessage(response)
-                }
-            );
-        }
     }
 
-    private FormatMessage(data: CrawlerResponse): string
-    {
-        return data.message + ' (' + data.link + ')';
->>>>>>> master
-    }
-
-<<<<<<< HEAD
     private FormatMessage(data: CrawlerResponse): string
     {
         return '**' + data.message + '** (' + data.link + ')';
     }  
-=======
-export interface crawl
-{
-    crawl(callback?: (response: any) => void): void;
-}
-
-export interface CrawlerResponse
-{
-    message: string;
-    link: string;
->>>>>>> master
 }

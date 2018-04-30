@@ -43,24 +43,12 @@ var Crawler = (function () {
         this.Stopped = true;
     };
     Crawler.prototype.Interceptor = function (response) {
-<<<<<<< HEAD
         if (typeof response !== "undefined") {
             this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
         }
     };
     Crawler.prototype.FormatMessage = function (data) {
         return '**' + data.message + '** (' + data.link + ')';
-=======
-        if (response !== null) {
-            this.Discord.sendMessage({
-                to: this.Bot.ChannelID,
-                message: this.FormatMessage(response)
-            });
-        }
-    };
-    Crawler.prototype.FormatMessage = function (data) {
-        return data.message + ' (' + data.link + ')';
->>>>>>> master
     };
     return Crawler;
 }());
