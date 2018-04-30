@@ -1,13 +1,12 @@
-import { Baidu } from "./crawlers/Baidu";
 import * as Crawlers from "./crawlers/index";
 
 export class Crawler 
 {
-    public Interval: number;
+    public Interval: number = 5;
     private Stopped: boolean = true;
     private List: Array<any> = [];
 
-    constructor(private Bot: any, private Discord: any)
+    constructor(private Bot: any, private Client: any)
     {
         Object.keys(Crawlers).forEach
         (
@@ -84,7 +83,6 @@ export class Crawler
     {
         this.Stopped = true;
     }
-
     /**
      * This function will be called at all HTTP request
      * Here we will send the message on Discord
@@ -92,18 +90,16 @@ export class Crawler
      * @private
      * @memberof Crawler
      */
-    private Interceptor(response: any): void 
+    private Interceptor(response?: CrawlerResponse): void 
     {
-        this.Discord.sendMessage(
-            {
-                to: this.Bot.ChannelID,
-                message: response
-            }
-        );
+        if (typeof response !== "undefined")
+        {
+            this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
+        }
     }
-}
 
-export interface crawl
-{
-    crawl(callback?: (response: any) => void): void;
+    private FormatMessage(data: CrawlerResponse): string
+    {
+        return '**' + data.message + '** (' + data.link + ')';
+    }  
 }

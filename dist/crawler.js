@@ -2,10 +2,11 @@
 exports.__esModule = true;
 var Crawlers = require("./crawlers/index");
 var Crawler = (function () {
-    function Crawler(Bot, Discord) {
+    function Crawler(Bot, Client) {
         var _this = this;
         this.Bot = Bot;
-        this.Discord = Discord;
+        this.Client = Client;
+        this.Interval = 5;
         this.Stopped = true;
         this.List = [];
         Object.keys(Crawlers).forEach(function (key) {
@@ -42,10 +43,12 @@ var Crawler = (function () {
         this.Stopped = true;
     };
     Crawler.prototype.Interceptor = function (response) {
-        this.Discord.sendMessage({
-            to: this.Bot.ChannelID,
-            message: response
-        });
+        if (typeof response !== "undefined") {
+            this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
+        }
+    };
+    Crawler.prototype.FormatMessage = function (data) {
+        return '**' + data.message + '** (' + data.link + ')';
     };
     return Crawler;
 }());

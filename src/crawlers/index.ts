@@ -1,2 +1,1 @@
-export { Baidu } from "./Baidu";
-export { Yonkou } from "./Yonkou";
+export { Wasabisyrup } from "./Wasabisyrup";
