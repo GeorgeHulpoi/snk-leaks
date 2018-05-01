@@ -1,5 +1,3 @@
-const HTTP = require('https');
-const URL = require('url');
 const cloudscraper = require('cloudscraper');
 
 class MaruMaruCrawler implements crawl
@@ -21,6 +19,7 @@ class MaruMaruCrawler implements crawl
         if (!this.published)
         {
             this.check(callback);
+            console.log('MaruMaru runned at ' + (new Date()).toLocaleTimeString());
         }
     }
 

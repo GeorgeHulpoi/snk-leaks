@@ -53,7 +53,7 @@ var Crawler = (function () {
         }
     };
     Crawler.prototype.FormatMessage = function (data) {
-        return '**' + data.message + '** (' + data.link + ')';
+        return '@everyone **' + data.message + '** (' + data.link + ')';
     };
     return Crawler;
 }());

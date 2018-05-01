@@ -110,6 +110,6 @@ export class Crawler
 
     private FormatMessage(data: CrawlerResponse): string
     {
-        return '**' + data.message + '** (' + data.link + ')';
+        return '@everyone **' + data.message + '** (' + data.link + ')';
     }  
 }

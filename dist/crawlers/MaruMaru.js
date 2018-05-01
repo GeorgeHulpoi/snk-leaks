@@ -1,7 +1,5 @@
 "use strict";
 exports.__esModule = true;
-var HTTP = require('https');
-var URL = require('url');
 var cloudscraper = require('cloudscraper');
 var MaruMaruCrawler = (function () {
     function MaruMaruCrawler() {
@@ -13,6 +11,7 @@ var MaruMaruCrawler = (function () {
     MaruMaruCrawler.prototype.crawl = function (callback) {
         if (!this.published) {
             this.check(callback);
+            console.log('MaruMaru runned at ' + (new Date()).toLocaleTimeString());
         }
     };
     MaruMaruCrawler.prototype.check = function (callback) {

@@ -9,7 +9,7 @@
 ### 3. If exist, put on Discord and stop this crawler (not all).
 #### This need to be updated every month (just change the chapter number).
 
-# Wasabysyrup arhitecture
+# Ryokutya arhitecture (omg it's another name in crawlers.. sry)
 ### 1. Download the website
 ### 2. Get all articles with regex (without sticky post).
 ### 3. Verify if it some new article.
@@ -17,10 +17,15 @@
 #### 3.2 Verify with Regex some words
 #### 3.3 If are that words, put on Discord
 
+# Baidu arhitecture
+### 1. Download the website
+### 2. Get all thread which contains (new chapter number) in title.
+### 3. Put in a list to not ping the discord again.
+
 # TO DO
 #### Function for all crawlers to check if it's outdated.
-#### Tame the bot, only a man or a Rule group can use it.
+#### Baidu crawler to follow a thread (check if it have new replies) (with commands, not follow all threads from Baidu Crawler list, lol)
 
-# List with Crawlers:
-#### Baidu https://tieba.baidu.com/f?kw=%E8%BF%9B%E5%87%BB%E7%9A%84%E5%B7%A8%E4%BA%BA%E5%88%86%E6%9E%90 (I think it's chinese, we need specific words)
+
+# List with future Crawlers:
 #### Maybe a crawler on Google Images

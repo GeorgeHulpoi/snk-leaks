@@ -17,17 +17,21 @@ var Bot = (function () {
             _this.Crawler.Stop();
         };
         this.Message = function (message) {
-            if (message.content[0] == "!") {
-                var params = message.content.split(' ');
-                var originalCmd = params[0];
-                var cmd = _this.transformCmd(params[0]);
-                params.splice(0, 1);
-                if (typeof Cmds[cmd] === "function") {
-                    Cmds[cmd].apply(Cmds, [_this, message].concat(params));
+            var allowedRole = message.guild.roles.find("name", "Admin");
+            if (message.member.roles.has(allowedRole.id)) {
+                if (message.content[0] == "!") {
+                    var params = message.content.split(' ');
+                    var originalCmd = params[0];
+                    var cmd = _this.transformCmd(params[0]);
+                    params.splice(0, 1);
+                    if (typeof Cmds[cmd] === "function") {
+                        Cmds[cmd].apply(Cmds, [_this, message].concat(params));
+                    }
+                    else {
+                        message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
+                    }
                 }
-                else {
-                    message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
-                }
+                return;
             }
         };
         this.Client = new Discord.Client();

@@ -18,6 +18,7 @@ class WasabisyrupCrawler implements crawl
     public crawl(callback: CrawlerResponseCallback): void 
     {
         this.getArticles(callback);
+        console.log('Ryokutya runned at ' + (new Date()).toLocaleTimeString());
     }
 
     /**

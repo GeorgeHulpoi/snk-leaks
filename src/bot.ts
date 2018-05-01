@@ -94,21 +94,26 @@ export class Bot
      */
     private Message = (message: any) => 
     {
-        if (message.content[0] == "!")
+        const allowedRole = message.guild.roles.find("name", "Admin");
+        if (message.member.roles.has(allowedRole.id))
         {
-            let params = message.content.split(' ');
-            const originalCmd = params[0];
-            const cmd = this.transformCmd(params[0]);
-            params.splice(0,1);
-
-            if (typeof Cmds[cmd] === "function")
+            if (message.content[0] == "!")
             {
-                Cmds[cmd](this, message, ...params);
-            }
-            else 
-            {
-                message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
-            }
+                let params = message.content.split(' ');
+                const originalCmd = params[0];
+                const cmd = this.transformCmd(params[0]);
+                params.splice(0,1);
+    
+                if (typeof Cmds[cmd] === "function")
+                {
+                    Cmds[cmd](this, message, ...params);
+                }
+                else 
+                {
+                    message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
+                }
+            }           
+            return;
         }
     }
 }

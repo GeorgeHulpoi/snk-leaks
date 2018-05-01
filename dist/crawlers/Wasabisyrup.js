@@ -11,6 +11,7 @@ var WasabisyrupCrawler = (function () {
     };
     WasabisyrupCrawler.prototype.crawl = function (callback) {
         this.getArticles(callback);
+        console.log('Ryokutya runned at ' + (new Date()).toLocaleTimeString());
     };
     WasabisyrupCrawler.prototype.getArticles = function (callback) {
         var _this = this;
