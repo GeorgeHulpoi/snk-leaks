@@ -82,6 +82,16 @@ export class Crawler
     public Stop(): void 
     {
         this.Stopped = true;
+        Object.keys(Crawlers).forEach
+        (
+            (key: string) => 
+            {
+                if (key !== "__esModule") 
+                {
+                    Crawlers[key].reset();
+                }
+            }
+        );
     }
     /**
      * This function will be called at all HTTP request

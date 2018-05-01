@@ -41,6 +41,11 @@ var Crawler = (function () {
     };
     Crawler.prototype.Stop = function () {
         this.Stopped = true;
+        Object.keys(Crawlers).forEach(function (key) {
+            if (key !== "__esModule") {
+                Crawlers[key].reset();
+            }
+        });
     };
     Crawler.prototype.Interceptor = function (response) {
         if (typeof response !== "undefined") {
