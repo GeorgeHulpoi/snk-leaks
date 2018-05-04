@@ -25,8 +25,11 @@
 # TO DO
 #### Function for all crawlers to check if it's outdated.
 #### Baidu crawler to follow a thread (check if it have new replies) (with commands, not follow all threads from Baidu Crawler list, lol)
-
+#### Do a special function for downloading.
+#### Include in that function the cases when the webiste is down or the internet is down.
+#### Check on Baidu for pink topics.
 
 # List with future Crawlers:
 #### Maybe a crawler on Google Images
 #### https://bbs.hupu.com/21856340.html
+#### https://tieba.baidu.com/home/main?un=%E6%83%85%E5%A0%B1%E5%B8%AB&ie=utf-8&fr=pb
