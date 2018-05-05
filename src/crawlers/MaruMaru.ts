@@ -1,4 +1,4 @@
-const cloudscraper = require('cloudscraper');
+import { Download } from '../download';
 
 class MaruMaruCrawler implements crawl
 {
@@ -16,59 +16,80 @@ class MaruMaruCrawler implements crawl
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        if (!this.published)
+        if (this.published)
         {
-            this.check(callback);
-            console.log('MaruMaru runned at ' + (new Date()).toLocaleTimeString());
+            callback();
+            return;
         }
+
+        console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     }
 
+    /**
+     * Check the website if it's posted the new chapter
+     * 
+     * @private
+     * @param {CrawlerResponseCallback} callback 
+     * @memberof MaruMaruCrawler
+     */
     private check(callback: CrawlerResponseCallback): void 
     {
-        cloudscraper.get
-        (
-            'https://marumaru.in/b/manga/82810', 
-            (error: any, response: any, body: string) => 
+        Download('https://marumaru.in/b/manga/82810', (error: any, response: any, body: string) =>
+        {
+            // Checking if we have errors
+            if (error != null)
             {
-                if (error)
-                {
-                    
-                }
-                else 
-                {
-                    let HTMLContent: string = body;
-
-                    // Remove the non-see elements
-                    HTMLContent = HTMLContent.replace(/(\r\n\t|\n|\r\t)/gm,"");
-                    // Remove the scripts
-                    HTMLContent = HTMLContent.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-                    HTMLContent = HTMLContent.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-
-                    const data = HTMLContent.match(/<a[^<>]*?href="(https?:\/\/wasabisyrup.com\/archives\/[^"]*?)"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*105\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
-
-                    if (data != null)
-                    {
-                        const match = data[0].match(/https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9-]*/g);
-                        const link = match[0];
-
-                        this.published = true;
-
-                        callback
-                        (
-                            {
-                                message: 'New chapter published on MaruMaru',
-                                link: link
-                            }
-                        );
-                    } 
-                    else 
-                    {
-                        callback();
-                    }
-                }
+                console.log('Error in MaruMaru crawler at Download function.');
+                console.log(error);
+                callback();
+                return;
             }
-        );
+
+            let HTMLContent: string = body;
+
+            HTMLContent = this.CleanHTML(HTMLContent);
+
+            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*105\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
+   
+            // No new chapter
+            if (data == null)
+            {
+                callback();
+                return;
+            }
+
+            const match = data[0].match(/https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*/g);
+            const link = match[0];
+
+            this.published = true;
+
+            callback
+            (
+                {
+                    message: 'New chapter published on MaruMaru',
+                    link: link
+                }
+            );
+        });
     }
 
+    /**
+     * Remove the scripts and unseen elements
+     * 
+     * @private
+     * @param {string} html 
+     * @returns {string} 
+     * @memberof MaruMaruCrawler
+     */
+    private CleanHTML(html: string): string 
+    {
+        let a: string = html;
+        // Remove the non-see elements
+        a = a.replace(/(\r\n\t|\n|\r\t)/gm,"");
+        // Remove the scripts
+        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
+        return a;
+    }
 }
 export let MaruMaru = new MaruMaruCrawler();

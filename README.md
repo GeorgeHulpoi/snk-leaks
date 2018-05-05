@@ -25,8 +25,6 @@
 # TO DO
 #### Function for all crawlers to check if it's outdated.
 #### Baidu crawler to follow a thread (check if it have new replies) (with commands, not follow all threads from Baidu Crawler list, lol)
-#### Do a special function for downloading.
-#### Include in that function the cases when the webiste is down or the internet is down.
 #### Check on Baidu for pink topics.
 
 # List with future Crawlers:

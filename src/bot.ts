@@ -12,7 +12,10 @@ export class Bot
 
     constructor()
     {
-        this.Client = new Discord.Client();
+        this.Client = new Discord.Client
+        ({
+            autoReconnect: true
+        });
         this.Client.login(Config.token);
         this.Crawler = new Crawler(this, this.Client);
         this.Events();
@@ -39,6 +42,7 @@ export class Bot
      */
     private Ready = (evt: any) => 
     {
+        this.Client.user.setActivity('with Sasha potato');
         console.log('Started!');
     };
 

@@ -9,6 +9,7 @@ var Bot = (function () {
         var _this = this;
         this.CrawlerInterval = 5;
         this.Ready = function (evt) {
+            _this.Client.user.setActivity('with Sasha potato');
             console.log('Started!');
         };
         this.Disconnect = function (error, code) {
@@ -34,7 +35,9 @@ var Bot = (function () {
                 return;
             }
         };
-        this.Client = new Discord.Client();
+        this.Client = new Discord.Client({
+            autoReconnect: true
+        });
         this.Client.login(Config.token);
         this.Crawler = new crawler_1.Crawler(this, this.Client);
         this.Events();

@@ -9,8 +9,8 @@ var BaiduCrawler = (function () {
         this.List = [];
     };
     BaiduCrawler.prototype.crawl = function (callback) {
-        this.getThreads(callback);
-        console.log('Baidu runned at ' + (new Date()).toLocaleTimeString());
+        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
+        callback();
     };
     BaiduCrawler.prototype.getThreads = function (callback) {
         var _this = this;
@@ -22,13 +22,15 @@ var BaiduCrawler = (function () {
             response.on('end', function () {
                 HTMLContent = HTMLContent.replace(/(\r\n\t|\n|\r\t)/gm, "");
                 var data = HTMLContent.match(/<ul\s*id="thread_list"\s*class="threadlist_bright j_threadlist_bright">[^\n]*?<\/ul>\s*<div\s*class="thread_list_bottom clearfix">/g);
-                HTMLContent = data[0];
+                if (data != null) {
+                    HTMLContent = data[0];
+                }
                 var Article;
                 while ((Article = (/<a[^<>]*?href="\/p\/([0-9]*)"[^<>]*?class="\s*j_th_tit\s*"[^<>]*?>/g).exec(HTMLContent)) != null) {
                     HTMLContent = HTMLContent.replace(Article[0], "");
                     var data2 = Article[0].match(/title="[^"]*?105[^"]*?"/g);
                     if (data2 != null) {
-                        if (_this.List.indexOf(Article[1]) == -1) {
+                        if (_this.List.indexOf(Article[1]) == -1 && Article[1] != 5647801676 && Article[1] != 5640468739 && Article[1] != 5679288921) {
                             callback({
                                 message: 'Baidu new thread',
                                 link: 'https://tieba.baidu.com/p/' + Article[1]

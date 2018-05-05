@@ -16,8 +16,9 @@ class BaiduCrawler implements crawl
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        this.getThreads(callback);
-        console.log('Baidu runned at ' + (new Date()).toLocaleTimeString());
+        //this.getThreads(callback);
+        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
+        callback();
     }
 
     private getThreads(callback: CrawlerResponseCallback): void 
@@ -48,8 +49,11 @@ class BaiduCrawler implements crawl
 
                         // Get the threads
                         const data = HTMLContent.match(/<ul\s*id="thread_list"\s*class="threadlist_bright j_threadlist_bright">[^\n]*?<\/ul>\s*<div\s*class="thread_list_bottom clearfix">/g);
-                        HTMLContent = data[0];
-
+                        if (data != null)
+                        {
+                            HTMLContent = data[0];
+                        }
+                        
                         // Get every article
                         let Article: any;
                         while ((Article = (/<a[^<>]*?href="\/p\/([0-9]*)"[^<>]*?class="\s*j_th_tit\s*"[^<>]*?>/g).exec(HTMLContent)) != null) 
@@ -61,7 +65,7 @@ class BaiduCrawler implements crawl
                             if (data2 != null)
                             {
                                 // Check if exist already in list
-                                if (this.List.indexOf(Article[1]) == -1)
+                                if (this.List.indexOf(Article[1]) == -1 && Article[1] != 5647801676 && Article[1] != 5640468739 && Article[1] != 5679288921)
                                 {
                                     callback
                                     (
