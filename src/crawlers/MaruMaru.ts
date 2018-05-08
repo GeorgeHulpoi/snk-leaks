@@ -50,7 +50,7 @@ class MaruMaruCrawler implements crawl
 
             HTMLContent = this.CleanHTML(HTMLContent);
 
-            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*105\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
+            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
    
             // No new chapter
             if (data == null)
@@ -92,4 +92,4 @@ class MaruMaruCrawler implements crawl
         return a;
     }
 }
-export let MaruMaru = new MaruMaruCrawler();
+export const MaruMaru: any = new MaruMaruCrawler();

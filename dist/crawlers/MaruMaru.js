@@ -27,7 +27,7 @@ var MaruMaruCrawler = (function () {
             }
             var HTMLContent = body;
             HTMLContent = _this.CleanHTML(HTMLContent);
-            var data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*105\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
+            var data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
             if (data == null) {
                 callback();
                 return;

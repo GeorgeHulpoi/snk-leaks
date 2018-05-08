@@ -1,17 +1,18 @@
 "use strict";
 exports.__esModule = true;
 var Ryokutya_1 = require("../crawlers/Ryokutya");
-function setRyokutyaLastPost(bot, message, time) {
+var client_1 = require("../client");
+function setRyokutyaLastPost(message, time) {
     var value = Number(time);
     if (typeof time === "undefined") {
-        message.reply('**[USE]:** !set-ryokutya-last-post **[number value]**');
+        client_1.Client.reply(message, '**[USE]:** !set-ryokutya-last-post **[number value]**');
         return;
     }
     else if (value < 0) {
-        message.reply('Invalid value!');
+        client_1.Client.reply(message, '**Invalid value!**');
         return;
     }
     Ryokutya_1.Ryokutya.lastArticle = value;
-    message.reply('**Ryokutya crawler** have now last article **' + value + '**.');
+    client_1.Client.reply(message, '**Ryokutya crawler** has now last article **' + value + '**.');
 }
 exports.setRyokutyaLastPost = setRyokutyaLastPost;

@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
-var Crawlers = require("./crawlers/index");
-var Crawler = (function () {
-    function Crawler(Bot, Client) {
+var Crawlers = require("./crawlers");
+var client_1 = require("./client");
+var bot_1 = require("./bot");
+var CrawlerClass = (function () {
+    function CrawlerClass() {
         var _this = this;
-        this.Bot = Bot;
-        this.Client = Client;
         this.Interval = 5;
         this.Stopped = true;
         this.List = [];
@@ -15,7 +15,7 @@ var Crawler = (function () {
             }
         });
     }
-    Crawler.prototype.Crawl = function (iterate) {
+    CrawlerClass.prototype.Crawl = function (iterate) {
         var _this = this;
         if (iterate === void 0) { iterate = 0; }
         if (this.Stopped) {
@@ -32,14 +32,14 @@ var Crawler = (function () {
             _this.Crawl(iterate + 1);
         });
     };
-    Crawler.prototype.itStarted = function () {
+    CrawlerClass.prototype.itStarted = function () {
         return (!this.Stopped);
     };
-    Crawler.prototype.Start = function () {
+    CrawlerClass.prototype.Start = function () {
         this.Stopped = false;
         this.Crawl();
     };
-    Crawler.prototype.Stop = function () {
+    CrawlerClass.prototype.Stop = function () {
         this.Stopped = true;
         Object.keys(Crawlers).forEach(function (key) {
             if (key !== "__esModule") {
@@ -47,14 +47,14 @@ var Crawler = (function () {
             }
         });
     };
-    Crawler.prototype.Interceptor = function (response) {
-        if (typeof response !== "undefined") {
-            this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
+    CrawlerClass.prototype.Interceptor = function (response) {
+        if (typeof response !== "undefined" && this.itStarted()) {
+            client_1.Client.send(bot_1.Bot.ChannelID, this.FormatMessage(response));
         }
     };
-    Crawler.prototype.FormatMessage = function (data) {
+    CrawlerClass.prototype.FormatMessage = function (data) {
         return '**' + data.message + '** (' + data.link + ')';
     };
-    return Crawler;
+    return CrawlerClass;
 }());
-exports.Crawler = Crawler;
+exports.Crawler = new CrawlerClass();

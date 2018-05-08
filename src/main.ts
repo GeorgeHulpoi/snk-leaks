@@ -1,3 +1,3 @@
 import { Bot } from "./bot";
 
-new Bot();
+Bot.start();

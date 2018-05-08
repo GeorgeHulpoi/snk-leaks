@@ -8,5 +8,7 @@ var set_crawler_interval_1 = require("./set-crawler-interval");
 exports.setCrawlerInterval = set_crawler_interval_1.setCrawlerInterval;
 var set_ryokutya_last_post_1 = require("./set-ryokutya-last-post");
 exports.setRyokutyaLastPost = set_ryokutya_last_post_1.setRyokutyaLastPost;
+var ban_baidu_thread_1 = require("./ban-baidu-thread");
+exports.banBaiduThread = ban_baidu_thread_1.banBaiduThread;
 var say_1 = require("./say");
 exports.say = say_1.say;

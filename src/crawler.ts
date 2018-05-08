@@ -1,12 +1,14 @@
-import * as Crawlers from "./crawlers/index";
+import * as Crawlers from "./crawlers";
+import { Client } from "./client";
+import { Bot } from "./bot";
 
-export class Crawler 
+class CrawlerClass
 {
     public Interval: number = 5;
     private Stopped: boolean = true;
-    private List: Array<any> = [];
+    private List: any[] = [];
 
-    constructor(private Bot: any, private Client: any)
+    constructor()
     {
         Object.keys(Crawlers).forEach
         (
@@ -97,14 +99,13 @@ export class Crawler
      * This function will be called at all HTTP request
      * Here we will send the message on Discord
      * 
-     * @private
      * @memberof Crawler
      */
-    private Interceptor(response?: CrawlerResponse): void 
+    public Interceptor(response?: CrawlerResponse): void 
     {
-        if (typeof response !== "undefined")
+        if (typeof response !== "undefined" && this.itStarted())
         {
-            this.Client.channels.get(this.Bot.ChannelID).send(this.FormatMessage(response));
+            Client.send(Bot.ChannelID, this.FormatMessage(response));
         }
     }
 
@@ -113,3 +114,5 @@ export class Crawler
         return '**' + data.message + '** (' + data.link + ')';
     }  
 }
+
+export const Crawler = new CrawlerClass();

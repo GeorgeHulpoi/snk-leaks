@@ -1,11 +1,14 @@
-export function stopCrawler(bot: any, message: any): void
+import { Crawler } from "../crawler";
+import { Client } from "../client";
+
+export function stopCrawler(message: any): void
 {
-    if (!bot.Crawler.itStarted())
+    if (!Crawler.itStarted())
     {
-        message.reply('Start the crawler first.');
+        Client.reply(message, '**Start the crawler first time!**');
         return;                   
     }
 
-    message.reply('Stop the crawler.');
-    bot.Crawler.Stop();
+    Client.reply(message, '**The crawler stopped!**');
+    Crawler.Stop();
 }

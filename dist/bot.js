@@ -1,21 +1,20 @@
 "use strict";
 exports.__esModule = true;
-var Discord = require('discord.js');
-var Config = require('../Config.json');
 var crawler_1 = require("./crawler");
+var client_1 = require("./client");
 var Cmds = require("./cmds");
-var Bot = (function () {
-    function Bot() {
+var BotClass = (function () {
+    function BotClass() {
         var _this = this;
         this.CrawlerInterval = 5;
         this.Ready = function (evt) {
-            _this.Client.user.setActivity('with Sasha potato');
+            client_1.Client.user.setActivity('with Sasha potato');
             console.log('Started!');
         };
         this.Disconnect = function (error, code) {
             console.log('Bot disconnected!');
             console.log('Error ' + error + ', code: ' + code);
-            _this.Crawler.Stop();
+            crawler_1.Crawler.Stop();
         };
         this.Message = function (message) {
             var allowedRole = message.guild.roles.find("name", "Admin");
@@ -26,7 +25,7 @@ var Bot = (function () {
                     var cmd = _this.transformCmd(params[0]);
                     params.splice(0, 1);
                     if (typeof Cmds[cmd] === "function") {
-                        Cmds[cmd].apply(Cmds, [_this, message].concat(params));
+                        Cmds[cmd].apply(Cmds, [message].concat(params));
                     }
                     else {
                         message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
@@ -35,19 +34,16 @@ var Bot = (function () {
                 return;
             }
         };
-        this.Client = new Discord.Client({
-            autoReconnect: true
-        });
-        this.Client.login(Config.token);
-        this.Crawler = new crawler_1.Crawler(this, this.Client);
         this.Events();
     }
-    Bot.prototype.Events = function () {
-        this.Client.on('ready', this.Ready);
-        this.Client.on('message', this.Message);
-        this.Client.on('disconnect', this.Disconnect);
+    BotClass.prototype.start = function () {
     };
-    Bot.prototype.transformCmd = function (cmd) {
+    BotClass.prototype.Events = function () {
+        client_1.Client.on('ready', this.Ready);
+        client_1.Client.on('message', this.Message);
+        client_1.Client.on('disconnect', this.Disconnect);
+    };
+    BotClass.prototype.transformCmd = function (cmd) {
         var len = cmd.length;
         var command = (cmd.substring(1, len)).split('');
         for (var i = 0; i < len - 1; ++i) {
@@ -60,6 +56,7 @@ var Bot = (function () {
         }
         return command.join('');
     };
-    return Bot;
+    return BotClass;
 }());
-exports.Bot = Bot;
+exports.BotClass = BotClass;
+exports.Bot = new BotClass();

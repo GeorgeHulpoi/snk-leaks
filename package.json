@@ -1,6 +1,6 @@
 {
     "name": "snk-leaks",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Searching everywhere for leaks!",
     "main": "main.js",
     "author": "Armyw0w",

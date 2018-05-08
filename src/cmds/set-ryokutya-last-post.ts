@@ -1,21 +1,22 @@
-import { Ryokutya } from '../crawlers/Ryokutya';
+import { Ryokutya } from "../crawlers/Ryokutya";
+import { Client } from "../client";
 
-export function setRyokutyaLastPost(bot: any, message: any, time: string): void
+export function setRyokutyaLastPost(message: any, time: string): void
 {
     const value = Number(time);
 
     if (typeof time === "undefined")
     {
-        message.reply('**[USE]:** !set-ryokutya-last-post **[number value]**');
+        Client.reply(message, '**[USE]:** !set-ryokutya-last-post **[number value]**');
         return;
     }
     else if (value < 0)
     {
-        message.reply('Invalid value!');
+        Client.reply(message, '**Invalid value!**');
         return;
     }
 
     Ryokutya.lastArticle = value;
 
-    message.reply('**Ryokutya crawler** have now last article **' + value + '**.');
+    Client.reply(message, '**Ryokutya crawler** has now last article **' + value + '**.');
 }

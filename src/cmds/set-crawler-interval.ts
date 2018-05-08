@@ -1,19 +1,22 @@
-export function setCrawlerInterval(bot: any, message: any, time: string): void
+import { Crawler } from "../crawler";
+import { Client } from "../client";
+
+export function setCrawlerInterval(message: any, time: string): void
 {
     const value = Number(time);
 
     if (typeof time === "undefined")
     {
-        message.reply('**[USE]:** !set-crawler-interval **[number value]**');
+        Client.reply(message, '**[USE]:** !set-crawler-interval **[number value]**');
         return;
     }
     else if (value <= 0)
     {
-        message.reply('Invalid value!');
+        Client.reply(message, '**Invalid value!**');
         return;
     }
 
-    bot.Crawler.Interval = value;
+    Crawler.Interval = value;
 
-    message.reply('I set the interval at **' + value + 's**.');
+    Client.reply(message, 'I put the interval at **' + value + 's**.');
 }

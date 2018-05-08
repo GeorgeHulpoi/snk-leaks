@@ -9,7 +9,7 @@
 ### 3. If exist, put on Discord and stop this crawler (not all).
 #### This need to be updated every month (just change the chapter number).
 
-# Ryokutya arhitecture (omg it's another name in crawlers.. sry)
+# Ryokutya arhitecture
 ### 1. Download the website
 ### 2. Get all articles with regex (without sticky post).
 ### 3. Verify if it some new article.
@@ -23,11 +23,10 @@
 ### 3. Put in a list to not ping the discord again.
 
 # TO DO
-#### Function for all crawlers to check if it's outdated.
 #### Baidu crawler to follow a thread (check if it have new replies) (with commands, not follow all threads from Baidu Crawler list, lol)
-#### Check on Baidu for pink topics.
 
 # List with future Crawlers:
 #### Maybe a crawler on Google Images
 #### https://bbs.hupu.com/21856340.html
 #### https://tieba.baidu.com/home/main?un=%E6%83%85%E5%A0%B1%E5%B8%AB&ie=utf-8&fr=pb
+#### http://m.tw.weibo.com/zekken

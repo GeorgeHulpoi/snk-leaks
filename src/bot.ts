@@ -1,23 +1,19 @@
-const Discord = require('discord.js');
-const Config = require('../Config.json');
 import { Crawler } from "./crawler";
+import { Client } from "./client";
 import * as Cmds from "./cmds";
 
-export class Bot
+export class BotClass
 {
-    private Client: any;
-    public Crawler: Crawler;
     public ChannelID: number;
     private CrawlerInterval: number = 5; // In seconds
 
+    public start(): void 
+    {
+        
+    }
+
     constructor()
     {
-        this.Client = new Discord.Client
-        ({
-            autoReconnect: true
-        });
-        this.Client.login(Config.token);
-        this.Crawler = new Crawler(this, this.Client);
         this.Events();
     }
 
@@ -29,9 +25,9 @@ export class Bot
      */
     private Events(): void 
     {
-        this.Client.on('ready', this.Ready);
-        this.Client.on('message', this.Message);
-        this.Client.on('disconnect', this.Disconnect);
+        Client.on('ready', this.Ready);
+        Client.on('message', this.Message);
+        Client.on('disconnect', this.Disconnect);
     }
 
     /**
@@ -42,7 +38,7 @@ export class Bot
      */
     private Ready = (evt: any) => 
     {
-        this.Client.user.setActivity('with Sasha potato');
+        Client.user.setActivity('with Sasha potato');
         console.log('Started!');
     };
 
@@ -57,7 +53,7 @@ export class Bot
         console.log('Bot disconnected!');
         console.log('Error ' + error + ', code: ' + code);
 
-        this.Crawler.Stop();
+        Crawler.Stop();
     }
 
     /**
@@ -110,7 +106,7 @@ export class Bot
     
                 if (typeof Cmds[cmd] === "function")
                 {
-                    Cmds[cmd](this, message, ...params);
+                    Cmds[cmd](message, ...params);
                 }
                 else 
                 {
@@ -121,3 +117,5 @@ export class Bot
         }
     }
 }
+
+export const Bot = new BotClass();

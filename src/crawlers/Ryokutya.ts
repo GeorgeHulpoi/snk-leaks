@@ -209,4 +209,4 @@ class RyokutyaCrawler implements crawl
         return a;
     }
 }
-export let Ryokutya = new RyokutyaCrawler();
+export const Ryokutya: any = new RyokutyaCrawler();

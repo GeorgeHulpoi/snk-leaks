@@ -1,12 +1,16 @@
-export function startCrawler(bot: any, message: any): void
+import { Crawler } from "../crawler";
+import { Bot } from "../bot";
+import { Client } from "../client";
+
+export function startCrawler(message: any): void
 {
-    if (bot.Crawler.itStarted())
+    if (Crawler.itStarted())
     {
-        message.reply('The crawler it\'s already running.');
+        Client.reply(message, '**The crawler it\'s already running**');
         return;                   
     }
 
-    message.reply('Started the crawler.');
-    bot.ChannelID = message.channel.id;
-    bot.Crawler.Start();
+    Client.reply(message, '**The crawler started!**');
+    Bot.ChannelID = message.channel.id;
+    Crawler.Start();
 }

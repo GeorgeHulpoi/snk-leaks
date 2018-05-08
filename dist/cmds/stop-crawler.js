@@ -1,11 +1,13 @@
 "use strict";
 exports.__esModule = true;
-function stopCrawler(bot, message) {
-    if (!bot.Crawler.itStarted()) {
-        message.reply('Start the crawler first.');
+var crawler_1 = require("../crawler");
+var client_1 = require("../client");
+function stopCrawler(message) {
+    if (!crawler_1.Crawler.itStarted()) {
+        client_1.Client.reply(message, '**Start the crawler first time!**');
         return;
     }
-    message.reply('Stop the crawler.');
-    bot.Crawler.Stop();
+    client_1.Client.reply(message, '**The crawler stopped!**');
+    crawler_1.Crawler.Stop();
 }
 exports.stopCrawler = stopCrawler;
