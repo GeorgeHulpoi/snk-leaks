@@ -20,9 +20,13 @@ export function Download(url: string, callback: DownloadResponseCallback): void
     request
     (
         options,
-        (error: any, response: any, body: any) => 
+        (error: any, response: any, body: string) => 
         {
-            callback(error, response, body);
+            let _body: string = body;
+            _body = _body.replace(/(\r\n\t|\n|\r\t)/gm,"");
+            _body = _body.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
+
+            callback(error, response, _body);
         }
     );
 }

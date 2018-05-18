@@ -49,7 +49,7 @@ var CrawlerClass = (function () {
     };
     CrawlerClass.prototype.Interceptor = function (response) {
         if (typeof response !== "undefined" && this.itStarted()) {
-            client_1.Client.send(bot_1.Bot.ChannelID, this.FormatMessage(response));
+            client_1.Client.send(bot_1.Bot.ChannelID, this.FormatMessage(response), response.img);
         }
     };
     CrawlerClass.prototype.FormatMessage = function (data) {

@@ -1,6 +1,6 @@
 import { Download } from '../download';
 
-class MaruMaruCrawler implements crawl
+class MaruMaruCrawler implements Crawler
 {
     private published: boolean = false;
 
@@ -16,14 +16,15 @@ class MaruMaruCrawler implements crawl
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        if (this.published)
+        /*if (this.published)
         {
             callback();
             return;
         }
 
         console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        this.check(callback);*/
+        callback();
     }
 
     /**
@@ -48,8 +49,6 @@ class MaruMaruCrawler implements crawl
 
             let HTMLContent: string = body;
 
-            HTMLContent = this.CleanHTML(HTMLContent);
-
             const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
    
             // No new chapter
@@ -73,23 +72,5 @@ class MaruMaruCrawler implements crawl
             );
         });
     }
-
-    /**
-     * Remove the scripts and unseen elements
-     * 
-     * @private
-     * @param {string} html 
-     * @returns {string} 
-     * @memberof MaruMaruCrawler
-     */
-    private CleanHTML(html: string): string 
-    {
-        let a: string = html;
-        // Remove the non-see elements
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm,"");
-        // Remove the scripts
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
-    }
 }
-export const MaruMaru: any = new MaruMaruCrawler();
+export const MaruMaru: MaruMaruCrawler = new MaruMaruCrawler();

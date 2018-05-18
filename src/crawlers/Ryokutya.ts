@@ -1,6 +1,6 @@
 import { Download } from '../download';
 
-class RyokutyaCrawler implements crawl
+class RyokutyaCrawler implements Crawler
 {
     public lastArticle: number = 0;
 
@@ -16,9 +16,9 @@ class RyokutyaCrawler implements crawl
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        //this.getArticles(callback);
-        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        /*console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);*/
+        callback();
     }
 
     /**
@@ -107,7 +107,6 @@ class RyokutyaCrawler implements crawl
             }
 
             let HTMLContent: string = body;
-            HTMLContent = this.CleanHTML(HTMLContent);
 
             // Get the content from body
             const data = HTMLContent.match(/<div\s*id="primary"\s*class="site-content">.*?<\/div><!--\s*#primary\s*-->/g);
@@ -155,7 +154,6 @@ class RyokutyaCrawler implements crawl
             }
 
             let HTMLContent: string = body;
-            HTMLContent = this.CleanHTML(HTMLContent);
 
             const data = HTMLContent.match(/<article\s*id="post-[0-9]*"\s*class="[^"]*?">.*?<\/article>/g);
             if (data == null)
@@ -190,23 +188,5 @@ class RyokutyaCrawler implements crawl
         const data = content.match(/(進撃|巨人)/g);
         return (data == null) ? false : true;
     }
-
-    /**
-     * Remove the scripts and unseen elements
-     * 
-     * @private
-     * @param {string} html 
-     * @returns {string} 
-     * @memberof RyokutyaCrawler
-     */
-    private CleanHTML(html: string): string 
-    {
-        let a: string = html;
-        // Remove the non-see elements
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm,"");
-        // Remove the scripts
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
-    }
 }
-export const Ryokutya: any = new RyokutyaCrawler();
+export const Ryokutya: RyokutyaCrawler = new RyokutyaCrawler();

@@ -1,7 +1,7 @@
 import { Crawler } from "../crawler";
 import { Download } from "../download";
 
-class BaiduCrawler implements crawl
+class BaiduCrawler implements Crawler
 {
     public List: number[] = [];
 
@@ -17,8 +17,9 @@ class BaiduCrawler implements crawl
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        this.check(callback);
-        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
+        //this.check(callback);
+        //console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
+        callback();
     }
 
     /**
@@ -78,7 +79,6 @@ class BaiduCrawler implements crawl
             }
 
             let HTMLContent: string = body;
-            HTMLContent = this.CleanHTML(HTMLContent);
 
             // Get the articles
             const data = HTMLContent.match(/<ul\s*id="thread_list"\s*class="threadlist_bright j_threadlist_bright">[^\n]*?<\/ul>\s*<div\s*class="thread_list_bottom clearfix">/g);
@@ -110,23 +110,5 @@ class BaiduCrawler implements crawl
             callback(List);
         });
     }
-
-    /**
-     * Remove the scripts and unseen elements
-     * 
-     * @private
-     * @param {string} html 
-     * @returns {string} 
-     * @memberof BaiduCrawler
-     */
-    private CleanHTML(html: string): string 
-    {
-        let a: string = html;
-        // Remove the non-see elements
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm,"");
-        // Remove the scripts
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
-    }
 }
-export const Baidu: any = new BaiduCrawler();
+export const Baidu: BaiduCrawler = new BaiduCrawler();

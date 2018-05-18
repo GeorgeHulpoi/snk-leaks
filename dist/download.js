@@ -14,7 +14,10 @@ function Download(url, callback) {
         headers: headers
     };
     request(options, function (error, response, body) {
-        callback(error, response, body);
+        var _body = body;
+        _body = _body.replace(/(\r\n\t|\n|\r\t)/gm, "");
+        _body = _body.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
+        callback(error, response, _body);
     });
 }
 exports.Download = Download;

@@ -9,8 +9,7 @@ var RyokutyaCrawler = (function () {
         this.lastArticle = 0;
     };
     RyokutyaCrawler.prototype.crawl = function (callback) {
-        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        callback();
     };
     RyokutyaCrawler.prototype.check = function (callback) {
         var _this = this;
@@ -49,7 +48,6 @@ var RyokutyaCrawler = (function () {
         });
     };
     RyokutyaCrawler.prototype.getAllArticles = function (callback) {
-        var _this = this;
         var List = [];
         download_1.Download('http://ryokutya2089.com', function (error, response, body) {
             if (error != null) {
@@ -59,7 +57,6 @@ var RyokutyaCrawler = (function () {
                 return;
             }
             var HTMLContent = body;
-            HTMLContent = _this.CleanHTML(HTMLContent);
             var data = HTMLContent.match(/<div\s*id="primary"\s*class="site-content">.*?<\/div><!--\s*#primary\s*-->/g);
             if (data == null) {
                 console.log('Ryokutya crawler it\'s outdated!');
@@ -86,7 +83,6 @@ var RyokutyaCrawler = (function () {
                 return;
             }
             var HTMLContent = body;
-            HTMLContent = _this.CleanHTML(HTMLContent);
             var data = HTMLContent.match(/<article\s*id="post-[0-9]*"\s*class="[^"]*?">.*?<\/article>/g);
             if (data == null) {
                 console.log('Ryokutya crawler it\'s outdated!');
@@ -105,12 +101,6 @@ var RyokutyaCrawler = (function () {
     RyokutyaCrawler.prototype.checkContent = function (content) {
         var data = content.match(/(進撃|巨人)/g);
         return (data == null) ? false : true;
-    };
-    RyokutyaCrawler.prototype.CleanHTML = function (html) {
-        var a = html;
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm, "");
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
     };
     return RyokutyaCrawler;
 }());

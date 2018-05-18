@@ -9,12 +9,7 @@ var MaruMaruCrawler = (function () {
         this.published = false;
     };
     MaruMaruCrawler.prototype.crawl = function (callback) {
-        if (this.published) {
-            callback();
-            return;
-        }
-        console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        callback();
     };
     MaruMaruCrawler.prototype.check = function (callback) {
         var _this = this;
@@ -26,7 +21,6 @@ var MaruMaruCrawler = (function () {
                 return;
             }
             var HTMLContent = body;
-            HTMLContent = _this.CleanHTML(HTMLContent);
             var data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
             if (data == null) {
                 callback();
@@ -40,12 +34,6 @@ var MaruMaruCrawler = (function () {
                 link: link
             });
         });
-    };
-    MaruMaruCrawler.prototype.CleanHTML = function (html) {
-        var a = html;
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm, "");
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
     };
     return MaruMaruCrawler;
 }());

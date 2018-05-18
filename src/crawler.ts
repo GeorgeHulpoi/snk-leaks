@@ -6,7 +6,7 @@ class CrawlerClass
 {
     public Interval: number = 5;
     private Stopped: boolean = true;
-    private List: any[] = [];
+    private List: Crawler[] = [];
 
     constructor()
     {
@@ -105,7 +105,7 @@ class CrawlerClass
     {
         if (typeof response !== "undefined" && this.itStarted())
         {
-            Client.send(Bot.ChannelID, this.FormatMessage(response));
+            Client.send(Bot.ChannelID, this.FormatMessage(response), response.img);
         }
     }
 

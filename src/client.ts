@@ -12,7 +12,14 @@ Client.reply = (message: any, content: string) =>
     Client.channels.get(message.channel.id).send(content);
 }
 
-Client.send = (channel: number, content: string) =>
+Client.send = (channel: number, content: string, img?: string) =>
 {
-    Client.channels.get(channel).send(content);
+    if (typeof img === "undefined")
+    {
+        Client.channels.get(channel).send(content);
+    }
+    else 
+    {
+        Client.channels.get(channel).send(content, {file: img});
+    }
 }

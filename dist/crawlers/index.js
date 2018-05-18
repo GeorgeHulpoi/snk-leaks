@@ -6,3 +6,7 @@ var MaruMaru_1 = require("./MaruMaru");
 exports.MaruMaru = MaruMaru_1.MaruMaru;
 var Baidu_1 = require("./Baidu");
 exports.Baidu = Baidu_1.Baidu;
+var Hupu_1 = require("./Hupu");
+exports.Hupu = Hupu_1.Hupu;
+var Zekken_1 = require("./Zekken");
+exports.Zekken = Zekken_1.Zekken;

@@ -10,8 +10,7 @@ var BaiduCrawler = (function () {
         this.List = [];
     };
     BaiduCrawler.prototype.crawl = function (callback) {
-        this.check(callback);
-        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
+        callback();
     };
     BaiduCrawler.prototype.check = function (callback) {
         var _this = this;
@@ -38,7 +37,6 @@ var BaiduCrawler = (function () {
                 return;
             }
             var HTMLContent = body;
-            HTMLContent = _this.CleanHTML(HTMLContent);
             var data = HTMLContent.match(/<ul\s*id="thread_list"\s*class="threadlist_bright j_threadlist_bright">[^\n]*?<\/ul>\s*<div\s*class="thread_list_bottom clearfix">/g);
             if (data == null) {
                 console.log('Baidu crawler it\'s outdated!');
@@ -57,12 +55,6 @@ var BaiduCrawler = (function () {
             }
             callback(List);
         });
-    };
-    BaiduCrawler.prototype.CleanHTML = function (html) {
-        var a = html;
-        a = a.replace(/(\r\n\t|\n|\r\t)/gm, "");
-        a = a.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");
-        return a;
     };
     return BaiduCrawler;
 }());
