@@ -10,7 +10,8 @@ var HupuCrawler = (function () {
         this.List = [];
     };
     HupuCrawler.prototype.crawl = function (callback) {
-        callback();
+        console.log('Hupu ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     };
     HupuCrawler.prototype.check = function (callback) {
         var _this = this;

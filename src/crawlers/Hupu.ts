@@ -17,11 +17,17 @@ class HupuCrawler implements Crawler
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        //console.log('Hupu ran at ' + (new Date()).toLocaleTimeString());
-        //this.check(callback);
-        callback();
+        console.log('Hupu ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     }
 
+    /**
+     * Check if are some new and publish it
+     * 
+     * @private
+     * @param {CrawlerResponseCallback} callback 
+     * @memberof HupuCrawler
+     */
     private check(callback: CrawlerResponseCallback): void 
     {
         this.getThreads
@@ -49,6 +55,13 @@ class HupuCrawler implements Crawler
         );
     }
 
+    /**
+     * Get all new articles related to SNK
+     * 
+     * @private
+     * @param {(list?: number[]) => void} callback 
+     * @memberof HupuCrawler
+     */
     private getThreads(callback: (list?: number[]) => void): void
     {
         Download('https://bbs.hupu.com/acg', (error: any, response: any, body: string) =>

@@ -16,9 +16,8 @@ class RyokutyaCrawler implements Crawler
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        /*console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);*/
-        callback();
+        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     }
 
     /**

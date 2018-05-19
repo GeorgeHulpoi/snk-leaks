@@ -9,7 +9,12 @@ var MaruMaruCrawler = (function () {
         this.published = false;
     };
     MaruMaruCrawler.prototype.crawl = function (callback) {
-        callback();
+        if (this.published) {
+            callback();
+            return;
+        }
+        console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     };
     MaruMaruCrawler.prototype.check = function (callback) {
         var _this = this;

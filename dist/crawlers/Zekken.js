@@ -10,8 +10,11 @@ var ZekkenCrawler = (function () {
         this.lastArticle = 0;
     };
     ZekkenCrawler.prototype.crawl = function (callback) {
-        console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        var day = (new Date()).getUTCDate();
+        if (day >= 3 && day <= 7) {
+            console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
+            this.check(callback);
+        }
     };
     ZekkenCrawler.prototype.check = function (callback) {
         var _this = this;

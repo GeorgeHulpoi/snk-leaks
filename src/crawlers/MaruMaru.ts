@@ -16,15 +16,14 @@ class MaruMaruCrawler implements Crawler
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        /*if (this.published)
+        if (this.published)
         {
             callback();
             return;
         }
 
         console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);*/
-        callback();
+        this.check(callback);
     }
 
     /**

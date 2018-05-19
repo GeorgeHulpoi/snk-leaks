@@ -17,9 +17,8 @@ class BaiduCrawler implements Crawler
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        //this.check(callback);
-        //console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
-        callback();
+        this.check(callback);
+        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
     }
 
     /**

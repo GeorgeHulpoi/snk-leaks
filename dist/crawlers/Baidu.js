@@ -10,7 +10,8 @@ var BaiduCrawler = (function () {
         this.List = [];
     };
     BaiduCrawler.prototype.crawl = function (callback) {
-        callback();
+        this.check(callback);
+        console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
     };
     BaiduCrawler.prototype.check = function (callback) {
         var _this = this;

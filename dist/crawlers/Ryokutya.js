@@ -9,7 +9,8 @@ var RyokutyaCrawler = (function () {
         this.lastArticle = 0;
     };
     RyokutyaCrawler.prototype.crawl = function (callback) {
-        callback();
+        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
+        this.check(callback);
     };
     RyokutyaCrawler.prototype.check = function (callback) {
         var _this = this;

@@ -17,8 +17,12 @@ class ZekkenCrawler implements Crawler
 
     public crawl(callback: CrawlerResponseCallback): void 
     {
-        console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        const day = (new Date()).getUTCDate();
+        if (day >= 3 && day <= 7)
+        {
+            console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
+            this.check(callback);
+        }
     }
 
     /**
