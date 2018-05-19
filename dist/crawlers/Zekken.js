@@ -20,7 +20,7 @@ var ZekkenCrawler = (function () {
         var _this = this;
         download_1.Download('http://m.tw.weibo.com/zekken', function (error, response, body) {
             if (error != null) {
-                console.log('Error in Hupu crawler at Download function.');
+                console.log('Error in Zekken crawler at Download function.');
                 console.log(error);
                 callback();
                 return;
