@@ -45,6 +45,7 @@ In file you will put this:
 
 Replace **your_token_code** with what you got from **Discord**.
 #### The code must be in quotes.
+#### If you don't know to create a .json file, check [this](https://www.mediacollege.com/microsoft/windows/extension-change.html)
 
 ### Configuring the Discord server
 
