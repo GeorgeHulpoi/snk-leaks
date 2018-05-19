@@ -4,5 +4,4 @@
 #### Interceptor check for responses which are not null and send message on Discord.
 
 # List with future Crawlers:
-#### https://tieba.baidu.com/home/main?un=%E6%83%85%E5%A0%B1%E5%B8%AB&ie=utf-8&fr=pb
-#### http://tdkr-cs91939.tumblr.com/
+#### http://fuku-shuu.tumblr.com
