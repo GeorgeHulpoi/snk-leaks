@@ -39,7 +39,7 @@ class ZekkenCrawler implements Crawler
             // Checking if we have errors
             if (error != null)
             {
-                console.log('Error in Hupu crawler at Download function.');
+                console.log('Error in Zekken crawler at Download function.');
                 console.log(error);
                 callback();
                 return;
