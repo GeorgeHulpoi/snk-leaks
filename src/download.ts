@@ -13,6 +13,7 @@ export function Download(url: string, callback: DownloadResponseCallback): void
     const options = 
     {
         url: url,
+        timeout: 10*1000,
         method: 'GET',
         headers: headers
     };
@@ -22,6 +23,11 @@ export function Download(url: string, callback: DownloadResponseCallback): void
         options,
         (error: any, response: any, body: string) => 
         {
+            if (typeof body === "undefined" || error || response.statusCode != 200)
+            {
+                callback(error, response, body);
+                return;
+            }
             let _body: string = body;
             _body = _body.replace(/(\r\n\t|\n|\r\t)/gm,"");
             _body = _body.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");

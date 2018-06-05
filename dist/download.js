@@ -10,10 +10,15 @@ function Download(url, callback) {
     headers['User-Agent'] = UserAgent;
     var options = {
         url: url,
+        timeout: 10 * 1000,
         method: 'GET',
         headers: headers
     };
     request(options, function (error, response, body) {
+        if (typeof body === "undefined" || error || response.statusCode != 200) {
+            callback(error, response, body);
+            return;
+        }
         var _body = body;
         _body = _body.replace(/(\r\n\t|\n|\r\t)/gm, "");
         _body = _body.replace(/<script[^<>]*?>[^<>]*?<\/script>/g, "");

@@ -15,6 +15,9 @@ var ZekkenCrawler = (function () {
             console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
             this.check(callback);
         }
+        else {
+            callback();
+        }
     };
     ZekkenCrawler.prototype.check = function (callback) {
         var _this = this;
@@ -33,28 +36,21 @@ var ZekkenCrawler = (function () {
                 return;
             }
             HTMLContent = data[0];
-            var first = 0;
             var Article;
             while ((Article = (/<li\s*class="picone"\s*>(.*?)<\/li>\s*<!--/g).exec(HTMLContent)) != null) {
                 HTMLContent = HTMLContent.replace(Article[0], "");
                 var id = Number(((/<a\s*href="\/zekken\/([0-9]*)"\s*>/g).exec(Article[1]))[1]);
-                if (first == 0) {
-                    first = id;
-                }
-                if (_this.lastArticle == 0) {
+                if (id > _this.lastArticle) {
+                    var img = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
+                    crawler_1.Crawler.Interceptor({
+                        message: 'Zekken posted new images',
+                        link: 'http://m.tw.weibo.com/zekken/' + id,
+                        img: img
+                    });
                     _this.lastArticle = id;
-                }
-                if (_this.lastArticle == id) {
                     break;
                 }
-                var img = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
-                crawler_1.Crawler.Interceptor({
-                    message: 'Zekken posted new images',
-                    link: 'http://m.tw.weibo.com/zekken/' + id,
-                    img: img
-                });
             }
-            _this.lastArticle = first;
             callback();
         });
     };

@@ -34,20 +34,23 @@ class HupuCrawler implements Crawler
         (
             (list?: number[]) => 
             {
-                const len = list.length;
-
-                for (let i = 0; i < len; ++i)
+                if (typeof list !== "undefined")
                 {
-                    this.List.push(list[i]);
+                    const len = list.length;
 
-                    // Dayum.. I don't like to write codes like this!!
-                    Crawler.Interceptor
-                    (
-                        {
-                            message: 'Hupu new thread',
-                            link: 'https://bbs.hupu.com/' + list[i] + '.html'
-                        }
-                    );
+                    for (let i = 0; i < len; ++i)
+                    {
+                        this.List.push(list[i]);
+    
+                        // Dayum.. I don't like to write codes like this!!
+                        Crawler.Interceptor
+                        (
+                            {
+                                message: 'Hupu new thread',
+                                link: 'https://bbs.hupu.com/' + list[i] + '.html'
+                            }
+                        );
+                    }
                 }
 
                 callback();

@@ -34,20 +34,23 @@ class BaiduCrawler implements Crawler
         (
             (list?: number[]) => 
             {
-                const len = list.length;
-
-                for (let i = 0; i < len; ++i)
+                if (typeof list !== "undefined")
                 {
-                    this.List.push(list[i]);
+                    const len = list.length;
 
-                    // Dayum.. I don't like to write codes like this!!
-                    Crawler.Interceptor
-                    (
-                        {
-                            message: 'Baidu new thread',
-                            link: 'https://tieba.baidu.com/p/' + list[i]
-                        }
-                    );
+                    for (let i = 0; i < len; ++i)
+                    {
+                        this.List.push(list[i]);
+
+                        // Dayum.. I don't like to write codes like this!!
+                        Crawler.Interceptor
+                        (
+                            {
+                                message: 'Baidu new thread',
+                                link: 'https://tieba.baidu.com/p/' + list[i]
+                            }
+                        );
+                    }
                 }
 
                 callback();
@@ -94,7 +97,7 @@ class BaiduCrawler implements Crawler
                 HTMLContent = HTMLContent.replace(Article[0], "");
 
                 // Check if have in title the number of chapter
-                const data2 = Article[0].match(/title="[^"]*?105[^"]*?"/g);
+                const data2 = Article[0].match(/title="[^"]*?106[^"]*?"/g);
                 if (data2 != null)
                 {
 

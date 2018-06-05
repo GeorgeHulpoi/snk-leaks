@@ -16,13 +16,15 @@ var HupuCrawler = (function () {
     HupuCrawler.prototype.check = function (callback) {
         var _this = this;
         this.getThreads(function (list) {
-            var len = list.length;
-            for (var i = 0; i < len; ++i) {
-                _this.List.push(list[i]);
-                crawler_1.Crawler.Interceptor({
-                    message: 'Hupu new thread',
-                    link: 'https://bbs.hupu.com/' + list[i] + '.html'
-                });
+            if (typeof list !== "undefined") {
+                var len = list.length;
+                for (var i = 0; i < len; ++i) {
+                    _this.List.push(list[i]);
+                    crawler_1.Crawler.Interceptor({
+                        message: 'Hupu new thread',
+                        link: 'https://bbs.hupu.com/' + list[i] + '.html'
+                    });
+                }
             }
             callback();
         });

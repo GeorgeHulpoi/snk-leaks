@@ -16,13 +16,15 @@ var BaiduCrawler = (function () {
     BaiduCrawler.prototype.check = function (callback) {
         var _this = this;
         this.getThreads(function (list) {
-            var len = list.length;
-            for (var i = 0; i < len; ++i) {
-                _this.List.push(list[i]);
-                crawler_1.Crawler.Interceptor({
-                    message: 'Baidu new thread',
-                    link: 'https://tieba.baidu.com/p/' + list[i]
-                });
+            if (typeof list !== "undefined") {
+                var len = list.length;
+                for (var i = 0; i < len; ++i) {
+                    _this.List.push(list[i]);
+                    crawler_1.Crawler.Interceptor({
+                        message: 'Baidu new thread',
+                        link: 'https://tieba.baidu.com/p/' + list[i]
+                    });
+                }
             }
             callback();
         });
@@ -46,7 +48,7 @@ var BaiduCrawler = (function () {
             var Article;
             while ((Article = (/<a[^<>]*?href="\/p\/([0-9]*)"[^<>]*?class="\s*j_th_tit\s*"[^<>]*?>/g).exec(HTMLContent)) != null) {
                 HTMLContent = HTMLContent.replace(Article[0], "");
-                var data2 = Article[0].match(/title="[^"]*?105[^"]*?"/g);
+                var data2 = Article[0].match(/title="[^"]*?106[^"]*?"/g);
                 if (data2 != null) {
                     var nr = Number(Article[1]);
                     if (_this.List.indexOf(nr) == -1) {

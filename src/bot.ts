@@ -39,6 +39,7 @@ export class BotClass
     private Ready = (evt: any) => 
     {
         Client.user.setActivity('with Sasha potato');
+        console.clear();
         console.log('Started!');
     };
 
@@ -94,10 +95,11 @@ export class BotClass
      */
     private Message = (message: any) => 
     {
-        const allowedRole = message.guild.roles.find("name", "Admin");
-        if (message.member.roles.has(allowedRole.id))
+        const cID: number = message.channel.id;
+        if (message.content[0] == "!")
         {
-            if (message.content[0] == "!")
+            const allowedRole = message.guild.roles.find("name", "r00t");
+            if (message.member.roles.has(allowedRole.id))
             {
                 let params = message.content.split(' ');
                 const originalCmd = params[0];
@@ -112,9 +114,53 @@ export class BotClass
                 {
                     message.reply('Command \'**' + originalCmd + '**\' doesn\'t exist');
                 }
-            }           
+            }        
             return;
         }
+        if (message.content.toLowerCase() == "leaks when?" || message.content.toLowerCase() == "leaks when")
+        {
+            Client.send(cID, 'never');
+        }
+        else if (message.content.toLowerCase() == "leaks")
+        {
+            Client.send(cID, '', 'https://www.cookforyourlife.org/wp-content/uploads/2015/08/shutterstock_234785131-min.jpg');
+        }
+        else if (message.content.toLowerCase() == "sasha")
+        {
+            Client.send(cID, 'best gurl', 'http://i0.kym-cdn.com/entries/icons/original/000/018/963/Screenshot_159.png');
+        }
+        else if (message.content.toLowerCase() == "gabi")
+        {
+            Client.send(cID, 'DID NOTHING WRONG', 'https://cdn.discordapp.com/attachments/450324795981168640/452858852405411842/Gabi_prof.png');
+        }
+        else if (message.content.toLowerCase() == "cat")
+        {
+            Client.send(cID, 'meow', 'https://i.imgur.com/Y9ynHwx.gif');
+        }   
+        else if (message.content.toLowerCase() == "historia")
+        {
+            Client.send(cID, 'I show my dick for the queen.');
+        }  
+        else if (message.content.toLowerCase() == "armin")
+        {
+            Client.send(cID, '', 'https://cdn.discordapp.com/attachments/450324795981168640/453589843520258048/3DUC6tc.png');
+        }      
+        else if (message.content.toLowerCase() == "party hard")
+        {
+            Client.send(cID, 'kill sasha hard', 'https://cdn.discordapp.com/attachments/450324795981168640/453572634370768897/image.png');
+        }    
+        else if (message.content.toLowerCase() == "ereh")
+        {
+            Client.send(cID, 'come at me boi', 'https://i.imgur.com/YPPbDfl.jpg');
+        }         
+        else if (message.content.toLowerCase() == "goal")
+        {
+            Client.send(cID, 'WINNER OF CHAMPIONS LEAGUE 2016', 'https://i.imgur.com/x3IstEG.jpg');
+        }  
+        else if (message.content.toLowerCase() == "baseball")
+        {
+            Client.send(cID, '', 'https://i.imgur.com/2JD82zU.jpg');
+        } 
     }
 }
 
