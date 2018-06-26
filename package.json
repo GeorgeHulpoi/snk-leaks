@@ -11,6 +11,7 @@
         "discord.js": "^11.3.2",
         "erlpack": "github:discordapp/erlpack",
         "libsodium-wrappers": "^0.7.3",
+        "mysql": "^2.15.0",
         "node-opus": "^0.2.7",
         "opusscript": "0.0.6",
         "typescript": "^2.7.2",

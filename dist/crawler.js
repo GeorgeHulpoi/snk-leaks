@@ -49,11 +49,16 @@ var CrawlerClass = (function () {
     };
     CrawlerClass.prototype.Interceptor = function (response) {
         if (typeof response !== "undefined" && this.itStarted()) {
-            client_1.Client.send(bot_1.Bot.ChannelID, this.FormatMessage(response), response.img);
+            if (typeof response.legit !== "undefined" && response.legit === true) {
+                client_1.Client.send(bot_1.Bot.LegitChannelID, this.FormatMessage(response), response.img);
+            }
+            else {
+                client_1.Client.send(bot_1.Bot.PossibleChannelID, this.FormatMessage(response), response.img);
+            }
         }
     };
     CrawlerClass.prototype.FormatMessage = function (data) {
-        return '@everyone **' + data.message + '** (' + data.link + ')';
+        return '**' + data.message + '** (' + data.link + ')';
     };
     return CrawlerClass;
 }());

@@ -5,6 +5,7 @@ var crawler_1 = require("../crawler");
 var ZekkenCrawler = (function () {
     function ZekkenCrawler() {
         this.lastArticle = 0;
+        this.firstRun = true;
     }
     ZekkenCrawler.prototype.reset = function () {
         this.lastArticle = 0;
@@ -13,10 +14,9 @@ var ZekkenCrawler = (function () {
         var day = (new Date()).getUTCDate();
         if (day >= 3 && day <= 7) {
             console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
-            this.check(callback);
         }
         else {
-            callback();
+            this.check(callback);
         }
     };
     ZekkenCrawler.prototype.check = function (callback) {
@@ -40,15 +40,24 @@ var ZekkenCrawler = (function () {
             while ((Article = (/<li\s*class="picone"\s*>(.*?)<\/li>\s*<!--/g).exec(HTMLContent)) != null) {
                 HTMLContent = HTMLContent.replace(Article[0], "");
                 var id = Number(((/<a\s*href="\/zekken\/([0-9]*)"\s*>/g).exec(Article[1]))[1]);
-                if (id > _this.lastArticle) {
-                    var img = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
-                    crawler_1.Crawler.Interceptor({
-                        message: 'Zekken posted new images',
-                        link: 'http://m.tw.weibo.com/zekken/' + id,
-                        img: img
-                    });
+                if (_this.firstRun) {
                     _this.lastArticle = id;
+                    _this.firstRun = false;
                     break;
+                }
+                else {
+                    if (_this.lastArticle != id) {
+                        var img = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
+                        crawler_1.Crawler.Interceptor({
+                            message: 'Zekken posted new images',
+                            link: 'http://m.tw.weibo.com/zekken/' + id,
+                            img: img
+                        });
+                    }
+                    else {
+                        _this.firstRun = true;
+                        break;
+                    }
                 }
             }
             callback();

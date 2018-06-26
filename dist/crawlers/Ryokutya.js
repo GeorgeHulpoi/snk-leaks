@@ -10,7 +10,7 @@ var RyokutyaCrawler = (function () {
     };
     RyokutyaCrawler.prototype.crawl = function (callback) {
         console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+        callback();
     };
     RyokutyaCrawler.prototype.check = function (callback) {
         var _this = this;

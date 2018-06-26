@@ -4,6 +4,7 @@ import { Crawler} from '../crawler';
 class ZekkenCrawler implements Crawler
 {
     public lastArticle: number = 0;
+    private firstRun: boolean = true;
 
     constructor()
     {
@@ -21,12 +22,13 @@ class ZekkenCrawler implements Crawler
         if (day >= 3 && day <= 7)
         {
             console.log('Zekken ran at ' + (new Date()).toLocaleTimeString());
-            this.check(callback);
+            //this.check(callback);
             //callback();
         }
         else 
         {
-            callback();
+            this.check(callback);
+            //callback();
         }
     }
 
@@ -70,20 +72,32 @@ class ZekkenCrawler implements Crawler
 
                 const id: number = Number(((/<a\s*href="\/zekken\/([0-9]*)"\s*>/g).exec(Article[1]))[1]);
 
-                if (id > this.lastArticle)
+                if (this.firstRun)
                 {
-                    const img: string = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
-
-                    Crawler.Interceptor
-                    (
-                        {
-                            message: 'Zekken posted new images',
-                            link: 'http://m.tw.weibo.com/zekken/' + id,
-                            img: img,
-                        }
-                    );
                     this.lastArticle = id;
+                    this.firstRun = false;
                     break;
+                }
+                else 
+                {
+                    if (this.lastArticle != id)
+                    {
+                        const img: string = ((/<img[^<>]*?src="([^"]*?)"[^<>]*?>/g).exec(Article[1]))[1];
+
+                        Crawler.Interceptor
+                        (
+                            {
+                                message: 'Zekken posted new images',
+                                link: 'http://m.tw.weibo.com/zekken/' + id,
+                                img: img,
+                            }
+                        );
+                    }
+                    else 
+                    {
+                        this.firstRun = true;
+                        break;
+                    }
                 }
             }
 

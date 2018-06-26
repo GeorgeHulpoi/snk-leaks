@@ -105,13 +105,20 @@ class CrawlerClass
     {
         if (typeof response !== "undefined" && this.itStarted())
         {
-            Client.send(Bot.ChannelID, this.FormatMessage(response), response.img);
+            if (typeof response.legit !== "undefined" && response.legit === true)
+            {
+                Client.send(Bot.LegitChannelID, this.FormatMessage(response), response.img); 
+            }
+            else 
+            {
+                Client.send(Bot.PossibleChannelID, this.FormatMessage(response), response.img);
+            }
         }
     }
 
     private FormatMessage(data: CrawlerResponse): string
     {
-        return '@everyone **' + data.message + '** (' + data.link + ')';
+        return '**' + data.message + '** (' + data.link + ')';
     }  
 }
 

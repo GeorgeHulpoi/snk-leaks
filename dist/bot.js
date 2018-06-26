@@ -54,7 +54,7 @@ var BotClass = (function () {
                 client_1.Client.send(cID, 'I show my dick for the queen.');
             }
             else if (message.content.toLowerCase() == "armin") {
-                client_1.Client.send(cID, 'Is girl');
+                client_1.Client.send(cID, '', 'https://cdn.discordapp.com/attachments/450324795981168640/453589843520258048/3DUC6tc.png');
             }
             else if (message.content.toLowerCase() == "party hard") {
                 client_1.Client.send(cID, 'kill sasha hard', 'https://cdn.discordapp.com/attachments/450324795981168640/453572634370768897/image.png');

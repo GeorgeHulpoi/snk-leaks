@@ -26,7 +26,7 @@ var MaruMaruCrawler = (function () {
                 return;
             }
             var HTMLContent = body;
-            var data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
+            var data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*107\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
             if (data == null) {
                 callback();
                 return;
@@ -36,7 +36,8 @@ var MaruMaruCrawler = (function () {
             _this.published = true;
             callback({
                 message: 'New chapter published on MaruMaru',
-                link: link
+                link: link,
+                legit: true
             });
         });
     };

@@ -4,6 +4,7 @@ import { Download } from "../download";
 class BaiduCrawler implements Crawler
 {
     public List: number[] = [];
+    private firstRun: boolean = true;
 
     constructor()
     {
@@ -18,6 +19,7 @@ class BaiduCrawler implements Crawler
     public crawl(callback: CrawlerResponseCallback): void 
     {
         this.check(callback);
+        //callback();
         console.log('Baidu ran at ' + (new Date()).toLocaleTimeString());
     }
 
@@ -38,18 +40,29 @@ class BaiduCrawler implements Crawler
                 {
                     const len = list.length;
 
-                    for (let i = 0; i < len; ++i)
+                    if (this.firstRun)
                     {
-                        this.List.push(list[i]);
-
-                        // Dayum.. I don't like to write codes like this!!
-                        Crawler.Interceptor
-                        (
-                            {
-                                message: 'Baidu new thread',
-                                link: 'https://tieba.baidu.com/p/' + list[i]
-                            }
-                        );
+                        for (let i = 0; i < len; ++i)
+                        {
+                            this.List.push(list[i]);
+                        }
+                        this.firstRun = false;
+                    }
+                    else 
+                    {
+                        for (let i = 0; i < len; ++i)
+                        {
+                            this.List.push(list[i]);
+    
+                            // Dayum.. I don't like to write codes like this!!
+                            Crawler.Interceptor
+                            (
+                                {
+                                    message: 'Baidu new thread',
+                                    link: 'https://tieba.baidu.com/p/' + list[i]
+                                }
+                            );
+                        }
                     }
                 }
 

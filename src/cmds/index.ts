@@ -6,3 +6,5 @@ export { setZekkenLastPost } from "./set-zekken-last-post";
 export { banBaiduThread } from "./ban-baidu-thread";
 export { banHupuThread } from "./ban-hupu-thread";
 export { say } from "./say";
+export { thisPossible } from "./this-possible";
+export { thisLegit } from "./this-legit";

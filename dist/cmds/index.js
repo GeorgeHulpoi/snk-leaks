@@ -16,3 +16,7 @@ var ban_hupu_thread_1 = require("./ban-hupu-thread");
 exports.banHupuThread = ban_hupu_thread_1.banHupuThread;
 var say_1 = require("./say");
 exports.say = say_1.say;
+var this_possible_1 = require("./this-possible");
+exports.thisPossible = this_possible_1.thisPossible;
+var this_legit_1 = require("./this-legit");
+exports.thisLegit = this_legit_1.thisLegit;

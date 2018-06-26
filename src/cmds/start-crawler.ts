@@ -1,5 +1,4 @@
 import { Crawler } from "../crawler";
-import { Bot } from "../bot";
 import { Client } from "../client";
 
 export function startCrawler(message: any): void
@@ -11,6 +10,5 @@ export function startCrawler(message: any): void
     }
 
     Client.reply(message, '**The crawler started!**');
-    Bot.ChannelID = message.channel.id;
     Crawler.Start();
 }

@@ -5,6 +5,7 @@ var download_1 = require("../download");
 var BaiduCrawler = (function () {
     function BaiduCrawler() {
         this.List = [];
+        this.firstRun = true;
     }
     BaiduCrawler.prototype.reset = function () {
         this.List = [];
@@ -18,12 +19,20 @@ var BaiduCrawler = (function () {
         this.getThreads(function (list) {
             if (typeof list !== "undefined") {
                 var len = list.length;
-                for (var i = 0; i < len; ++i) {
-                    _this.List.push(list[i]);
-                    crawler_1.Crawler.Interceptor({
-                        message: 'Baidu new thread',
-                        link: 'https://tieba.baidu.com/p/' + list[i]
-                    });
+                if (_this.firstRun) {
+                    for (var i = 0; i < len; ++i) {
+                        _this.List.push(list[i]);
+                    }
+                    _this.firstRun = false;
+                }
+                else {
+                    for (var i = 0; i < len; ++i) {
+                        _this.List.push(list[i]);
+                        crawler_1.Crawler.Interceptor({
+                            message: 'Baidu new thread',
+                            link: 'https://tieba.baidu.com/p/' + list[i]
+                        });
+                    }
                 }
             }
             callback();

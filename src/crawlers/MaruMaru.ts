@@ -48,7 +48,7 @@ class MaruMaruCrawler implements Crawler
 
             let HTMLContent: string = body;
 
-            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*106\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
+            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*107\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
    
             // No new chapter
             if (data == null)
@@ -66,8 +66,9 @@ class MaruMaruCrawler implements Crawler
             (
                 {
                     message: 'New chapter published on MaruMaru',
-                    link: link
-                }
+                    link: link,
+                    legit: true
+                },
             );
         });
     }

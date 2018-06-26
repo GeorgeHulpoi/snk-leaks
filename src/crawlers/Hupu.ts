@@ -4,6 +4,7 @@ import { Download } from '../download';
 class HupuCrawler implements Crawler
 {
     public List: number[] = [];
+    private firstRun: boolean = true;
 
     constructor()
     {
@@ -38,18 +39,29 @@ class HupuCrawler implements Crawler
                 {
                     const len = list.length;
 
-                    for (let i = 0; i < len; ++i)
+                    if (this.firstRun)
                     {
-                        this.List.push(list[i]);
-    
-                        // Dayum.. I don't like to write codes like this!!
-                        Crawler.Interceptor
-                        (
-                            {
-                                message: 'Hupu new thread',
-                                link: 'https://bbs.hupu.com/' + list[i] + '.html'
-                            }
-                        );
+                        for (let i = 0; i < len; ++i)
+                        {
+                            this.List.push(list[i]);
+                        }
+                        this.firstRun = false;
+                    }
+                    else 
+                    {
+                        for (let i = 0; i < len; ++i)
+                        {
+                            this.List.push(list[i]);
+        
+                            // Dayum.. I don't like to write codes like this!!
+                            Crawler.Interceptor
+                            (
+                                {
+                                    message: 'Hupu new thread',
+                                    link: 'https://bbs.hupu.com/' + list[i] + '.html'
+                                }
+                            );
+                        }
                     }
                 }
 

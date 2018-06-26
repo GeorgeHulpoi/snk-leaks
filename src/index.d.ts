@@ -23,4 +23,5 @@ interface CrawlerResponse
     message: string;
     link: string;
     img?: string;
+    legit?: boolean;
 }

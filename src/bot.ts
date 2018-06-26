@@ -4,7 +4,8 @@ import * as Cmds from "./cmds";
 
 export class BotClass
 {
-    public ChannelID: number;
+    public PossibleChannelID: number;
+    public LegitChannelID: number;
     private CrawlerInterval: number = 5; // In seconds
 
     public start(): void 
