@@ -1,0 +1,16 @@
+[ -r /etc/lsb-release ] && . /etc/lsb-release 
+
+if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
+	# Fall back to using the very slow lsb_release utility
+	DISTRIB_DESCRIPTION=$(lsb_release -s -d) 
+fi 
+
+
+printf "    ___                                           ____           "
+printf "   /   |   _____   ____ ___    __  __ _      __  / __ \ _      __"
+printf "  / /| |  / ___/  / __ `__ \  / / / /| | /| / / / / / /| | /| / /"
+printf " / ___ | / /     / / / / / / / /_/ / | |/ |/ / / /_/ / | |/ |/ / "
+printf "/_/  |_|/_/     /_/ /_/ /_/  \__, /  |__/|__/  \____/  |__/|__/  "
+printf "                            /____/                               "
+
+printf "Welcome to %s (%s %s %s)\n" "$DISTRIB_DESCRIPTION" "$(uname -o)" "$(uname -r)" "$(uname -m)"
