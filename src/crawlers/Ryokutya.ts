@@ -1,192 +1,165 @@
+import { Crawler } from "./Crawler";
 import { Download } from '../download';
 
-class RyokutyaCrawler implements Crawler
+class RyokutyaCrawler extends Crawler
 {
-    public lastArticle: number = 0;
+    private KnownIDS: number[] = [];
 
-    constructor()
+    protected async html(): Promise<string>
     {
-
-    }
-
-    public reset(): void 
-    {
-        this.lastArticle = 0;
-    }
-
-    public crawl(callback: CrawlerResponseCallback): void 
-    {
-        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
-        //this.check(callback);
-        callback();
-    }
-
-    /**
-     * Check the website if it's something new
-     * 
-     * @private
-     * @param {CrawlerResponseCallback} callback 
-     * @memberof RyokutyaCrawler
-     */
-    private check(callback: CrawlerResponseCallback): void 
-    {
-        this.getAllArticles
+        return new Promise<string>
         (
-            (list?: string[]) => 
+            (resolve) => 
             {
-                if (list == null)
+                Download('http://ryokutya2089.com', (error: any, response: any, body: string) =>
                 {
-                    callback();
-                    return;
-                }
-
-                const len: number = list.length;
-                const before: number = this.lastArticle;
-                for (let i = 0; i < len; ++i)
-                {
-                    if (Number(list[i]) > this.lastArticle)
+                    // Checking if we have errors
+                    if (error != null)
                     {
-                        this.lastArticle = Number(list[i]);
+                        console.log('Error in Ryokutya crawler at Download function.');
+                        console.log(error);
+                        resolve(null);
+                        return;
                     }
-                }
-
-                if (before != this.lastArticle)
-                {
-                    this.checkArticle(this.lastArticle, (newest?: boolean) => 
+        
+                    // Get the content from body
+                    const data = body.match(/<div\s*id="primary"\s*class="site-content">.*?<\/div><!--\s*#primary\s*-->/g);
+                    if (data == null)
                     {
-                        if (newest == null)
-                        {
-                            callback();
-                            return;
-                        }
+                        console.log('Ryokutya crawler it\'s outdated!');
+                        resolve(null);
+                        return;
+                    }
 
-                        if (newest)
-                        {
-                            callback
-                            (
-                                {
-                                    message: 'New post on Ryokutya',
-                                    link: 'http://ryokutya2089.com/archives/' + this.lastArticle
-                                }
-                            );
-                        }
-                        else 
-                        {
-                            callback();
-                        }
-                    });
-                }
-                else 
-                {
-                    callback();
-                }
+                    // Remove the first article which is a sticky article
+                    const data2 = data[0].replace(/<article[^<>]*?class="[^"]*?post-96[^"]*?"[^<>]*?>.*?<\/article><!-- #post -->/g, "");
+                    resolve(data2);
+                });        
             }
         );
     }
 
-    /**
-     * Get all articles id
-     * 
-     * @private
-     * @param {(list?: string[]) => void} callback 
-     * @memberof RyokutyaCrawler
-     */
-    private getAllArticles(callback: (list?: string[]) => void): void 
+    private ids(html: string): number[]
     {
-        let List: string[] = [];
-
-        Download('http://ryokutya2089.com', (error: any, response: any, body: string) =>
+        if (html == null)
         {
-            // Checking if we have errors
-            if (error != null)
-            {
-                console.log('Error in Ryokutya crawler at Download function.');
-                console.log(error);
-                callback();
-                return;
-            }
+            return [];
+        }
 
-            let HTMLContent: string = body;
+        let HTMLContent: string = html;
+        let list: number[] = [];
+        let Article: any;
 
-            // Get the content from body
-            const data = HTMLContent.match(/<div\s*id="primary"\s*class="site-content">.*?<\/div><!--\s*#primary\s*-->/g);
-            if (data == null)
-            {
-                console.log('Ryokutya crawler it\'s outdated!');
-                callback();
-                return;
-            }
-            HTMLContent = data[0];
-            // Remove the first article which is a sticky article
-            HTMLContent = HTMLContent.replace(/<article[^<>]*?class="[^"]*?post-96[^"]*?"[^<>]*?>.*?<\/article><!-- #post -->/g, "");
-                    
-            let Article: any;
-            while ((Article = (/<article[^<>]*?id="post-(\d*)"[^<>]*?>/g).exec(HTMLContent)) != null) 
-            {
-                // Delete from content
-                HTMLContent = HTMLContent.replace(Article[0], "");
-                List.push(Article[1]);
-            }
+        while ((Article = (/<article[^<>]*?id="post-(\d*)"[^<>]*?>/g).exec(HTMLContent)) != null) 
+        {
+            // Delete from content
+            HTMLContent = HTMLContent.replace(Article[0], "");
+            list.push(Number(Article[1]));
+        }
 
-            callback(List);
-        });
+        return list;
     }
 
-    /**
-     * Check if the post it's related for leaks
-     * 
-     * @private
-     * @param {number} id 
-     * @param {(newest?: boolean) => void} callback 
-     * @memberof RyokutyaCrawler
-     */
-    private checkArticle(id: number, callback: (newest?: boolean) => void): void 
+    private unknownIds(ids: number[]): number[]
     {
-        Download('http://ryokutya2089.com/archives/' + id, (error: any, response: any, body: string) =>
+        let news: number[] = [];
+        const len = ids.length;
+        for (let i = 0; i < len; ++i)
         {
-            // Checking if we have errors
-            if (error != null)
+            if (this.KnownIDS.indexOf(ids[i]) == -1)
             {
-                console.log('Error in Ryokutya crawler at Download function.');
-                console.log(error);
-                callback();
-                return;
+                news.push(ids[i]);
+                this.KnownIDS.push(ids[i]);
             }
-
-            let HTMLContent: string = body;
-
-            const data = HTMLContent.match(/<article\s*id="post-[0-9]*"\s*class="[^"]*?">.*?<\/article>/g);
-            if (data == null)
-            {
-                console.log('Ryokutya crawler it\'s outdated!');
-                callback();
-                return;
-            }
-            HTMLContent = data[0];
-
-            if (this.checkContent(HTMLContent))
-            {
-                callback(true);
-            }
-            else 
-            {
-                callback(false);
-            }
-        });
+        }
+        return news;
     }
 
-    /**
-     * Searching for some words...
-     * 
-     * @private
-     * @param {string} content 
-     * @returns {boolean} 
-     * @memberof WasabisyrupCrawler
-     */
     private checkContent(content: string): boolean 
     {
         const data = content.match(/(進撃|巨人)/g);
         return (data == null) ? false : true;
     }
+
+    private async checkPost(id: number): Promise<boolean>
+    {
+        return new Promise<boolean>
+        (
+            (resolve) => 
+            {
+                Download('http://ryokutya2089.com/archives/' + id, (error: any, response: any, body: string) =>
+                {
+                    // Checking if we have errors
+                    if (error != null)
+                    {
+                        console.log('Error in Ryokutya crawler at Download function.');
+                        console.log(error);
+                        resolve(false);
+                        return;
+                    }
+
+                    let HTMLContent: string = body;
+
+                    const data = HTMLContent.match(/<article\s*id="post-[0-9]*"\s*class="[^"]*?">.*?<\/article>/g);
+                    if (data == null)
+                    {
+                        console.log('Ryokutya crawler it\'s outdated!');
+                        resolve(false);
+                        return;
+                    }
+                    HTMLContent = data[0];
+
+                    if (this.checkContent(HTMLContent))
+                    {
+                        resolve(true);
+                    }
+                    else 
+                    {
+                        resolve(false);
+                    }
+                });
+            }
+        );
+    }
+
+    private async snkIDs(ids: number[]): Promise<CrawlerDataResponse[]>
+    {
+        let list: CrawlerDataResponse[] = [];
+        const len = ids.length;
+        for (let i = 0; i < len; ++i)
+        {
+            if (await this.checkPost(ids[i]))
+            {
+                list.push 
+                (
+                    {
+                        message: 'New post by Ryokutya',
+                        link: 'http://ryokutya2089.com/archives/' + ids[i],
+                        legit: true
+                    }
+                );
+            }
+        }
+
+        return list;
+    }
+
+    protected async fn(): Promise<CrawlerDataResponse[]>
+    {
+        console.log('Ryokutya ran at ' + (new Date()).toLocaleTimeString());
+
+        const HTMLContent: string = await this.html();
+        const IDs: any[] = this.ids(HTMLContent);
+        const news: number[] = this.unknownIds(IDs);
+        const snk: CrawlerDataResponse[] = await this.snkIDs(news);
+
+        return snk;
+    }
+
+    protected Reset(): void 
+    {
+        this.KnownIDS = [];
+    }
 }
-export const Ryokutya: RyokutyaCrawler = new RyokutyaCrawler();
+
+export const Ryokutya = new RyokutyaCrawler();

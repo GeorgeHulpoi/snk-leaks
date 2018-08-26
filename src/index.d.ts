@@ -1,24 +1,9 @@
-declare type CrawlerResponseCallback = (response?: CrawlerResponse) => void;
+declare type CrawlerResponseCallback = (response?: CrawlerDataResponse) => void;
 declare type DownloadResponseCallback = (error: any, response: any, body: any) => void;
+declare type CrawlerEndCallback = (response: any) => void;
 
-interface Crawler
-{
-    /**
-     * This function is used to get data from website
-     * 
-     * @param {(response: any) => void} [callback] 
-     * @memberof Crawler
-     */
-    crawl(callback?: (response: any) => void): void;
-    /**
-     * Reset all data in crawler
-     * 
-     * @memberof Crawler
-     */
-    reset(): void;
-}
 
-interface CrawlerResponse
+interface CrawlerDataResponse
 {
     message: string;
     link: string;

@@ -1,3 +1,10 @@
 {
-   "token": "NDI3MTc4NTQ3Nzg2ODA5MzQ1.DZgzlw.upJ2G05Lgog86c_gW8o3CMaMoDk"
+    "token": "NDI3MTc4NTQ3Nzg2ODA5MzQ1.DiPQxA.LBzXtm0k3rdz0wQoqwgezfuHFbI",
+    "reddit":
+    {
+        "state": "da",
+        "client": "yZSStsLI-EC4Gw",
+        "secret": "UmHKf7ZY5OTGZ31ouX07kfEJxnI",
+        "uri": "http://127.0.0.1"
+    }
 }

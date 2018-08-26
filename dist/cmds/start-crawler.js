@@ -1,13 +1,9 @@
 "use strict";
 exports.__esModule = true;
-var crawler_1 = require("../crawler");
+var Crawlers_1 = require("../Crawlers");
 var client_1 = require("../client");
 function startCrawler(message) {
-    if (crawler_1.Crawler.itStarted()) {
-        client_1.Client.reply(message, '**The crawler it\'s already running**');
-        return;
-    }
     client_1.Client.reply(message, '**The crawler started!**');
-    crawler_1.Crawler.Start();
+    Crawlers_1.Crawlers.start();
 }
 exports.startCrawler = startCrawler;

@@ -9,6 +9,8 @@ export function Download(url: string, callback: DownloadResponseCallback): void
 {
     let headers: any = {};
     headers['User-Agent'] = UserAgent;
+    headers['Cache-Control'] = 'private, no-cache, no-store, must-revalidate, max-age=0';
+    headers['Pragma'] = 'no-cache';
 
     const options = 
     {

@@ -8,6 +8,8 @@ var Timeout = 6000;
 function Download(url, callback) {
     var headers = {};
     headers['User-Agent'] = UserAgent;
+    headers['Cache-Control'] = 'private, no-cache, no-store, must-revalidate, max-age=0';
+    headers['Pragma'] = 'no-cache';
     var options = {
         url: url,
         timeout: 10 * 1000,

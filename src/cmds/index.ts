@@ -1,10 +1,10 @@
 export { startCrawler } from "./start-crawler";
 export { stopCrawler } from "./stop-crawler";
 export { setCrawlerInterval } from "./set-crawler-interval";
-export { setRyokutyaLastPost } from "./set-ryokutya-last-post";
-export { setZekkenLastPost } from "./set-zekken-last-post";
-export { banBaiduThread } from "./ban-baidu-thread";
-export { banHupuThread } from "./ban-hupu-thread";
 export { say } from "./say";
 export { thisPossible } from "./this-possible";
 export { thisLegit } from "./this-legit";
+export { redditRequestToken } from "./reddit-request-token";
+export { redditComment } from "./reddit-comment";
+export { redditRefreshToken } from "./reddit-refresh-token";
+export { setPrmt } from "./set-prmt";

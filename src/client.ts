@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Config = require('../Config.json');
+const Config = require('../config.json');
 
 export let Client = new Discord.Client
 ({

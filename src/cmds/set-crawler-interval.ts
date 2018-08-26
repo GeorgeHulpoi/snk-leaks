@@ -1,4 +1,4 @@
-import { Crawler } from "../crawler";
+import { Crawlers } from "../Crawlers";
 import { Client } from "../client";
 
 export function setCrawlerInterval(message: any, time: string): void
@@ -16,7 +16,7 @@ export function setCrawlerInterval(message: any, time: string): void
         return;
     }
 
-    Crawler.Interval = value;
+    Crawlers.Interval = value;
 
     Client.reply(message, 'I put the interval at **' + value + 's**.');
 }

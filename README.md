@@ -1,7 +1,10 @@
-# Crawler arhitecture
-#### It need to download with HTTP request a webiste, search for specific words and get the content, compare the content with what bot already put on Discord.
-#### The crawl need to return an object, if nothing was found will return null.
-#### Interceptor check for responses which are not null and send message on Discord.
+# snk-leaks v2.0
 
-# List with future Crawlers:
-#### http://fuku-shuu.tumblr.com
+### The crawler architecture was changed, a common class for all crawlers, added anti-stop protection, and a better anti-reposting system.
+### Added a Reddit class, now the bot can comment on a reddit thread.
+### Deleted Hupu and Baidu crawlers, they're getting the leaks from Zekken, Ryokutya and Reddit.
+### Added something that will prevent bot from crashing.
+
+# TO DO
+
+### Make subscribtion for leaks to Reddit. This should send PM to subscribers with leaks.

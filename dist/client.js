@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var Discord = require('discord.js');
-var Config = require('../Config.json');
+var Config = require('../config.json');
 exports.Client = new Discord.Client({
     autoReconnect: true
 });

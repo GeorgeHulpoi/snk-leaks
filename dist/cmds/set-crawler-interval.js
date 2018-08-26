@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var crawler_1 = require("../crawler");
+var Crawlers_1 = require("../Crawlers");
 var client_1 = require("../client");
 function setCrawlerInterval(message, time) {
     var value = Number(time);
@@ -12,7 +12,7 @@ function setCrawlerInterval(message, time) {
         client_1.Client.reply(message, '**Invalid value!**');
         return;
     }
-    crawler_1.Crawler.Interval = value;
+    Crawlers_1.Crawlers.Interval = value;
     client_1.Client.reply(message, 'I put the interval at **' + value + 's**.');
 }
 exports.setCrawlerInterval = setCrawlerInterval;

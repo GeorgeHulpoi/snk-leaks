@@ -1,8 +1,8 @@
 {
     "name": "snk-leaks",
-    "version": "1.0.3",
+    "version": "2.0.0",
     "description": "Searching everywhere for leaks!",
-    "main": "main.js",
+    "main": "dist/main.js",
     "author": "Armyw0w",
     "dependencies": {
         "@types/node": "^9.6.0",

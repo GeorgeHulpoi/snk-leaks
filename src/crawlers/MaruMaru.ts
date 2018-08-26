@@ -1,76 +1,85 @@
+import { Crawler } from "./Crawler";
 import { Download } from '../download';
 
-class MaruMaruCrawler implements Crawler
+class MaruMaruCrawler extends Crawler
 {
     private published: boolean = false;
 
-    constructor()
+    protected async html(): Promise<string>
     {
-
+        return new Promise<string>
+        (
+            (resolve) => 
+            {
+                Download('https://marumaru.in/b/manga/82810', (error: any, response: any, body: string) =>
+                {
+                    // Checking if we have errors
+                    if (error != null)
+                    {
+                        console.log('Error in MaruMaru crawler at Download function.');
+                        console.log(error);
+                        resolve(null);
+                        return;
+                    }
+        
+                    resolve(body);
+                });
+            }
+        );
     }
 
-    public reset(): void 
+    private newChapter(html: string): string
     {
-        this.published = false;
-    }
-
-    public crawl(callback: CrawlerResponseCallback): void 
-    {
-        if (this.published)
+        if (html == null)
         {
-            callback();
-            return;
+            return null;
+        }
+
+        const data = html.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[^"]*?"[^<>]*?>[^<>]*?진격의\s*거인\s*107\s*화[^<>]*?<\/a>/g);
+   
+        // No new chapter
+        if (data == null)
+        {
+            return null;
+        }
+
+        const match = data[0].match(/https?:\/\/wasabisyrup.com\/archives\/[^"]*/g);
+        const link = match[0];
+
+        return link;
+    }
+
+    protected async fn(): Promise<CrawlerDataResponse[]>
+    {
+        if (this.published) 
+        {
+            return [];
         }
 
         console.log('MaruMaru ran at ' + (new Date()).toLocaleTimeString());
-        this.check(callback);
+
+        const HTMLContent: string = await this.html();
+        const link: string = this.newChapter(HTMLContent);    
+        if (link == null)
+        {
+            return [];
+        }
+
+        this.published = true;
+        const response = [
+            {
+                message: 'Chapter published by MaruMaru',
+                link: link,
+                legit: true
+            }
+        ];
+        return response;
     }
 
-    /**
-     * Check the website if it's posted the new chapter
-     * 
-     * @private
-     * @param {CrawlerResponseCallback} callback 
-     * @memberof MaruMaruCrawler
-     */
-    private check(callback: CrawlerResponseCallback): void 
+    protected Reset(): void 
     {
-        Download('https://marumaru.in/b/manga/82810', (error: any, response: any, body: string) =>
-        {
-            // Checking if we have errors
-            if (error != null)
-            {
-                console.log('Error in MaruMaru crawler at Download function.');
-                console.log(error);
-                callback();
-                return;
-            }
-
-            let HTMLContent: string = body;
-
-            const data = HTMLContent.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*"[^<>]*?>\s*<font[^<>]*?>\s*<span[^<>]*?>\s*진격의\s*거인\s*107\s*화\s*<\/span>\s*<\/font>\s*<\/a>/g);
-   
-            // No new chapter
-            if (data == null)
-            {
-                callback();
-                return;
-            }
-
-            const match = data[0].match(/https?:\/\/wasabisyrup.com\/archives\/[a-zA-Z0-9_-]*/g);
-            const link = match[0];
-
-            this.published = true;
-
-            callback
-            (
-                {
-                    message: 'New chapter published on MaruMaru',
-                    link: link,
-                    legit: true
-                },
-            );
-        });
+        this.published = false;
     }
 }
-export const MaruMaru: MaruMaruCrawler = new MaruMaruCrawler();
+
+export const MaruMaru = new MaruMaruCrawler();
