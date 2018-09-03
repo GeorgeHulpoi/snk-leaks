@@ -1,7 +1,7 @@
 export abstract class Crawler
 {
     static TIMEOUT: number = 10000;
-    private firstRun: boolean = false;
+    private firstRun: boolean = true;
 
     /**
      * This returns the new data
