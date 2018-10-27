@@ -35,7 +35,7 @@ class MaruMaruCrawler extends Crawler
             return null;
         }
 
-        const data = html.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[^"]*?"[^<>]*?>[^<>]*?진격의\s*거인\s*107\s*화[^<>]*?<\/a>/g);
+        const data = html.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[^"]*?"[^<>]*?>[^<>]*?진격의\s*거인\s*111\s*화[^<>]*?<\/a>/g);
    
         // No new chapter
         if (data == null)
