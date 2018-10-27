@@ -17,7 +17,7 @@ var BotClass = (function () {
         this.Message = function (message) {
             var cID = message.channel.id;
             if (message.content[0] == "!") {
-                var allowedRole = message.guild.roles.find("name", "USSR Leader");
+                var allowedRole = message.guild.roles.find("name", "Communist Party Leader");
                 if (message.member.roles.has(allowedRole.id)) {
                     var params = message.content.split(' ');
                     var originalCmd = params[0];
