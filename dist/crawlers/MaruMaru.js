@@ -75,7 +75,7 @@ var MaruMaruCrawler = (function (_super) {
         if (html == null) {
             return null;
         }
-        var data = html.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[^"]*?"[^<>]*?>[^<>]*?진격의\s*거인\s*107\s*화[^<>]*?<\/a>/g);
+        var data = html.match(/<a[^<>]*?href="https?:\/\/wasabisyrup.com\/archives\/[^"]*?"[^<>]*?>[^<>]*?진격의\s*거인\s*111\s*화[^<>]*?<\/a>/g);
         if (data == null) {
             return null;
         }
