@@ -95,7 +95,7 @@ export class BotClass
         const cID: number = message.channel.id;
         if (message.content[0] == "!")
         {
-            const allowedRole = message.guild.roles.find("name", "USSR Leader");
+            const allowedRole = message.guild.roles.find("name", "Communist Party Leader");
             if (message.member.roles.has(allowedRole.id))
             {
                 let params = message.content.split(' ');
